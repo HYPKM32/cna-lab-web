@@ -1,0 +1,62 @@
+# GitHub Pages 자동 배포
+# main 브랜치에 push 하면 정적 빌드(out/) → Pages 게시
+# 저장소 Settings → Pages → Source 를 "GitHub Actions" 로 설정해 둘 것
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # 프로젝트 사이트(user.github.io/<repo>)면 basePath="/<repo>",
+      # 사용자 사이트(<user>.github.io 저장소)면 basePath 없음 — 자동 판별
+      - name: Resolve basePath
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          if [[ "$REPO_NAME" == *.github.io ]]; then
+            echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
+          else
+            echo "NEXT_PUBLIC_BASE_PATH=/$REPO_NAME" >> "$GITHUB_ENV"
+          fi
+
+      - run: npm ci
+
+      # PDF 원문 호스트(선택): 저장소 Settings → Variables 에 PDF_BASE_URL 을 등록하면
+      # Publications/Seminars 의 View 버튼이 활성화됨 (예: https://files.cna-lab.org)
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_PDF_BASE_URL: ${{ vars.PDF_BASE_URL }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

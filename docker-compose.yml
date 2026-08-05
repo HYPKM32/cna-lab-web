@@ -1,0 +1,13 @@
+# 정적 사이트 로컬 데모 — 동적 버전(../docker-compose.yml, :5000)과 나란히 띄워 비교용
+#   docker compose up -d --build   →   http://<SERVER_IP>:8722
+# GitHub Pages 실배포는 .github/workflows/deploy.yml 이 담당 (이 파일과 무관)
+services:
+  static:
+    build: .
+    container_name: cna_static_demo
+    restart: unless-stopped
+    ports:
+      - "${SERVER_IP:-0.0.0.0}:${STATIC_PORT:-8722}:80"
+    volumes:
+      # PDF(View 버튼) 시연용 — 실제 Pages 배포에는 포함되지 않음
+      - ${UPLOADS_PATH:-../uploads}:/var/www/uploads:ro

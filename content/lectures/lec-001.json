@@ -1,0 +1,8 @@
+{
+ "id": 1,
+ "year": 2023,
+ "title": "제목",
+ "speaker": "강연자",
+ "location": "장소",
+ "lecture_date": "날짜"
+}

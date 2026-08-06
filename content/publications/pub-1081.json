@@ -1,0 +1,12 @@
+{
+ "id": 1081,
+ "type": "conference",
+ "year": 2023,
+ "pages": null,
+ "title": "Brain Metastases Segmentation using U-Net with  Large Kernel and Highlighting Foregrounds",
+ "venue": "2023 OHBM(Organization for Human Brain Mapping)",
+ "volume": null,
+ "authors": "Seung-Yeon Son, Yongseon Yoo, Sung Jun Ahn, Jong-Min Lee",
+ "link_url": null,
+ "is_highlight": 0
+}

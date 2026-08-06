@@ -6,8 +6,11 @@ import { PEOPLE_GROUPS, SITE } from "@/lib/labels";
 export const metadata: Metadata = { title: "People" };
 
 function photoUrl(p: Person) {
-  // 인물 사진은 public/uploads/ 에 번들됨 (scripts/sync-assets.sh)
-  return p.photo_key ? asset(`/uploads/${p.photo_key}`) : null;
+  // 이관분: 'file/...' (sync-assets.sh 가 번들) / CMS 업로드분: '/uploads/cms/...'
+  if (!p.photo_key) return null;
+  return asset(
+    p.photo_key.startsWith("/") ? p.photo_key : `/uploads/${p.photo_key}`,
+  );
 }
 
 function initials(name: string) {

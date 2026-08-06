@@ -1,9 +1,9 @@
-// 데이터 레이어 — Directus 대신 저장소에 내장된 JSON(data/*.json)을 읽는다.
-// 데이터 갱신은 JSON 파일을 수정(또는 재추출)하고 다시 배포하면 된다.
+// 데이터 레이어 — 콘텐츠 원본은 content/<컬렉션>/*.json (건별 파일, /admin CMS 가 편집).
+// data/*.json 은 prebuild(scripts/aggregate-content.mjs)가 생성하는 집계본이다.
 import publicationsJson from "@/data/publications.json";
 import peopleJson from "@/data/people.json";
 import lecturesJson from "@/data/lectures.json";
-import assetsJson from "@/data/assets.json";
+import assetsJson from "@/content/assets.json";
 
 // --- 타입 (기존 CNA 스키마와 동일) ---
 export type PubType =
@@ -69,10 +69,11 @@ const publications: Publication[] = (
   .sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || b.id - a.id);
 
 const people: Person[] = (
-  peopleJson as Array<Person & { sort_order: number }>
+  peopleJson as Array<Person & { sort_order?: number }>
 )
   .slice()
-  .sort((a, b) => a.sort_order - b.sort_order || a.id - b.id);
+  // CMS 로 추가된 항목은 sort_order 가 없을 수 있음 → 그룹 맨 뒤
+  .sort((a, b) => (a.sort_order ?? 999) - (b.sort_order ?? 999) || a.id - b.id);
 
 const lectures: Lecture[] = (lecturesJson as Lecture[])
   .slice()

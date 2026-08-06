@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# 생성물: content/ 에서 prebuild 로 집계됨 (scripts/aggregate-content.mjs)
+/data/
+
 # production
 /build
 

@@ -1,0 +1,12 @@
+{
+ "id": 1139,
+ "type": "conference",
+ "year": 2024,
+ "pages": null,
+ "title": "SagaGAN: Style Applied using Gram matrix Attribution based on StarGAN v2",
+ "venue": "The 35th British Machine Vision Conference",
+ "volume": null,
+ "authors": "Yongseon Yoo, Seonggyu Kim, Jong-Min Lee*",
+ "link_url": "https://bmva-archive.org.uk/bmvc/2024/papers/Paper_76/paper.pdf",
+ "is_highlight": 0
+}

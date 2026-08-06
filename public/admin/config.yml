@@ -4,9 +4,8 @@ backend:
   name: github
   repo: hanyangcna/cna-lab-web
   branch: main
-  # ⚠️ 배포 전 설정 필요: sveltia-cms-auth (Cloudflare Worker) 주소로 교체
-  #    https://github.com/sveltia/sveltia-cms-auth 참조
-  base_url: https://REPLACE-WITH-YOUR-AUTH-WORKER.workers.dev
+  # OAuth 중계: sveltia-cms-auth (Cloudflare Worker, hanyangcna 계정)
+  base_url: https://sveltia-cms-auth.hanyangcna.workers.dev
 
 # 사진 업로드 저장 위치 (저장소 내)
 media_folder: public/uploads/cms

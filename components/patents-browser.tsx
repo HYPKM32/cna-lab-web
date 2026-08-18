@@ -36,25 +36,16 @@ export function PatentsBrowser() {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-16">
-      {/* 등록원부풍 헤더 — 다크 밴드 + 모노 타이포 */}
-      <header className="relative overflow-hidden rounded-2xl bg-slate-900 px-8 py-12 text-white sm:px-12">
-        {/* 배경 모눈 패턴 (도면 느낌) */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-        <p className="relative font-mono text-xs uppercase tracking-[0.4em] text-sky-400">
-          {SITE.name} · IP Registry
+      {/* 헤더 — 다른 서브페이지(Publications/People/Seminars)와 통일 */}
+      <header className="border-b-4 border-double border-slate-900 pb-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-sky-700">
+          {SITE.name} · Intellectual Property
         </p>
-        <h1 className="relative mt-4 text-5xl font-extrabold tracking-tight sm:text-6xl">
+        <h1 className="mt-4 font-serif text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl">
           Patents
         </h1>
-        <p className="relative mt-4 max-w-2xl text-slate-400">
-          연구 성과로 출원·등록된 지식재산권 목록입니다.
+        <p className="mt-4 font-serif text-lg italic text-slate-500">
+          Patents filed &amp; registered by the lab
         </p>
       </header>
 

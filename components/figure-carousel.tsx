@@ -23,12 +23,16 @@ function Chevron({ dir }: { dir: "left" | "right" }) {
 
 export function FigureCarousel({ figures }: { figures: Figure[] }) {
   const [idx, setIdx] = useState(0);
+  const n = figures.length;
   const cur = figures[idx];
-  const many = figures.length > 1;
+  const many = n > 1;
+  // 끝에서 넘기면 반대편으로 순환
+  const prev = () => setIdx((i) => (i - 1 + n) % n);
+  const next = () => setIdx((i) => (i + 1) % n);
 
   const arrowClass =
-    "absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-2.5 text-white backdrop-blur-md transition " +
-    "hover:bg-sky-400/30 disabled:opacity-25 disabled:hover:bg-white/10";
+    "shrink-0 rounded-full bg-slate-800 p-3 text-white ring-1 ring-white/20 shadow-lg transition " +
+    "hover:bg-sky-500/40 hover:ring-sky-400/50";
 
   return (
     <div>
@@ -45,45 +49,34 @@ export function FigureCarousel({ figures }: { figures: Figure[] }) {
         )}
       </div>
 
-      {/* 송출 화면 */}
-      <div className="relative overflow-hidden rounded-2xl bg-slate-950/70 shadow-2xl shadow-black/40 ring-1 ring-white/10">
-        <div className="relative aspect-[16/10]">
-          <AnimatePresence mode="wait" initial={false}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <motion.img
-              key={cur.src}
-              src={cur.src}
-              alt={cur.label}
-              initial={{ opacity: 0, x: 32 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -32 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              className="absolute inset-0 h-full w-full object-contain p-2"
-            />
-          </AnimatePresence>
-        </div>
-
+      {/* 화살표(화면 밖) + 송출 화면 */}
+      <div className="flex items-center gap-3 sm:gap-4">
         {many && (
-          <>
-            <button
-              type="button"
-              aria-label="Previous figure"
-              disabled={idx === 0}
-              onClick={() => setIdx((i) => Math.max(0, i - 1))}
-              className={`${arrowClass} left-4`}
-            >
-              <Chevron dir="left" />
-            </button>
-            <button
-              type="button"
-              aria-label="Next figure"
-              disabled={idx === figures.length - 1}
-              onClick={() => setIdx((i) => Math.min(figures.length - 1, i + 1))}
-              className={`${arrowClass} right-4`}
-            >
-              <Chevron dir="right" />
-            </button>
-          </>
+          <button type="button" aria-label="Previous figure" onClick={prev} className={arrowClass}>
+            <Chevron dir="left" />
+          </button>
+        )}
+        <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl bg-slate-950/70 shadow-2xl shadow-black/40 ring-1 ring-white/10">
+          <div className="relative aspect-[16/10]">
+            <AnimatePresence mode="wait" initial={false}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <motion.img
+                key={cur.src}
+                src={cur.src}
+                alt={cur.label}
+                initial={{ opacity: 0, x: 32 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -32 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                className="absolute inset-0 h-full w-full object-contain p-2"
+              />
+            </AnimatePresence>
+          </div>
+        </div>
+        {many && (
+          <button type="button" aria-label="Next figure" onClick={next} className={arrowClass}>
+            <Chevron dir="right" />
+          </button>
         )}
       </div>
 

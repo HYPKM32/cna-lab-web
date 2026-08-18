@@ -1,10 +1,10 @@
 {
- "id": 3,
- "name": "Seonggyu Kim",
- "role": "PhD course in Dept. of Electronic Engineering, Hanyang University",
- "email": "fehur@hanyang.ac.kr",
- "category": "current",
- "photo_key": "file/sub3_1/2000838288_cjLC0QWS_cd738ec06db2dfe69834ce08e22a442d3c8941e8.png",
- "sort_order": 0,
- "affiliation": null
+  "id": 3,
+  "category": "alumni_postdoc",
+  "name": "Seong-gyu Kim",
+  "role": "Ph.D, Dept. of Electronic Engineering Engineering, Hanyang University",
+  "email": "fehur@hanyang.ac.kr",
+  "affiliation": "CNA LAB",
+  "photo_key": "file/sub3_1/2000838288_cjLC0QWS_cd738ec06db2dfe69834ce08e22a442d3c8941e8.png",
+  "sort_order": 0
 }

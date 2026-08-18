@@ -8,8 +8,8 @@ export const SITE = {
 };
 
 // 원페이지 구조: 탭은 홈의 해당 섹션으로 스크롤 이동
+// (Introduction 은 로고가 홈 링크 역할을 하므로 상단탭에서 제외 — 리모콘에는 있음)
 export const NAV = [
-  { href: "/", label: "Introduction" },
   { href: "/#publications", label: "Publications" },
   { href: "/#patents", label: "Patents" },
   { href: "/#people", label: "People" },

@@ -47,7 +47,7 @@ export function LecturesBrowser() {
 
       {/* Year jump bar — 상단 고정, 누르면 해당 연도 위치로 스크롤 */}
       {years.length > 1 && (
-        <div className="sticky top-0 z-20 -mx-2 mt-6 flex flex-wrap gap-1.5 bg-white/95 px-2 py-3 backdrop-blur">
+        <div className="sticky top-2 z-20 mt-6 flex flex-wrap gap-1.5 rounded-2xl bg-white/90 px-3 py-2.5 ring-1 ring-sky-200/70 shadow-md backdrop-blur">
           {years.map((y) => (
             <button
               key={y}

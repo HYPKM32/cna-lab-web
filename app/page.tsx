@@ -53,7 +53,27 @@ export default async function HomePage() {
       </section>
 
       {/* Stats + Highlights — 배너 위로 끌어올려 겹치되, 아래는 다크로 이어짐 */}
-      <section className="relative z-10 -mt-24 bg-slate-950 sm:-mt-28">
+      <section id="overview" className="relative z-10 -mt-24 scroll-mt-20 bg-slate-950 sm:-mt-28">
+        {/* 섹션 점프 바 — 스크롤 시 상단 고정, 누르면 해당 섹션으로 이동 */}
+        <nav className="pointer-events-none sticky top-3 z-30 flex justify-center px-4 pb-8">
+          <div className="pointer-events-auto flex max-w-full flex-wrap justify-center gap-1 overflow-x-auto rounded-full bg-slate-900/85 px-2.5 py-2 shadow-lg shadow-sky-500/10 ring-1 ring-sky-400/30 backdrop-blur-md">
+            {[
+              { href: "#overview", label: "Overview" },
+              ...research.map((sec, i) => ({
+                href: `#research-${i + 1}`,
+                label: `${String(i + 1).padStart(2, "0")} ${sec.title}`,
+              })),
+            ].map((t) => (
+              <a
+                key={t.href}
+                href={t.href}
+                className="whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-semibold text-slate-300 transition hover:bg-sky-400/15 hover:text-sky-300"
+              >
+                {t.label}
+              </a>
+            ))}
+          </div>
+        </nav>
         <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 lg:grid-cols-[1fr_1.6fr]">
           {/* 통계 — 왼쪽 */}
           <Reveal>
@@ -152,7 +172,8 @@ export default async function HomePage() {
             {research.map((sec, i) => (
               <div
                 key={sec.title}
-                className="grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-14"
+                id={`research-${i + 1}`}
+                className="grid scroll-mt-24 gap-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-14"
               >
                 {/* 번호 + 파트 제목 — 데스크톱: 왼쪽에 고정(sticky), 스크롤하면 다음 파트로 교체 / 모바일: 위 */}
                 <div>

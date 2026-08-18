@@ -71,8 +71,8 @@ export function PublicationsBrowser() {
         </p>
       </header>
 
-      {/* Filter tabs */}
-      <div className="mt-8 flex flex-wrap gap-2">
+      {/* Filter tabs — 은은한 하이라이트 패널 */}
+      <div className="mt-8 inline-flex flex-wrap gap-2 rounded-2xl bg-sky-50/70 p-2 ring-1 ring-sky-200/70 shadow-sm">
         {PUB_FILTERS.map((f) => {
           const isActive = f.key === active;
           return (
@@ -95,7 +95,7 @@ export function PublicationsBrowser() {
 
       {/* Year jump bar — 상단 고정, 누르면 해당 연도 위치로 스크롤 */}
       {years.length > 1 && (
-        <div className="sticky top-0 z-20 -mx-2 mt-6 flex flex-wrap gap-1.5 bg-white/95 px-2 py-3 backdrop-blur">
+        <div className="sticky top-2 z-20 mt-6 flex flex-wrap gap-1.5 rounded-2xl bg-white/90 px-3 py-2.5 ring-1 ring-sky-200/70 shadow-md backdrop-blur">
           {years.map((y) => (
             <button
               key={y}
@@ -113,7 +113,7 @@ export function PublicationsBrowser() {
       <div className="mt-8 space-y-12">
         {grouped.map(([year, list]) => (
           <section key={year} id={`year-${year}`} className="scroll-mt-20">
-            <h2 className="sticky top-14 z-10 -mx-2 bg-white/90 px-2 py-2 font-serif text-3xl font-bold text-slate-900 backdrop-blur">
+            <h2 className="sticky top-16 z-10 -mx-2 bg-white/90 px-2 py-2 font-serif text-3xl font-bold text-slate-900 backdrop-blur">
               {year}
             </h2>
             <ol className="mt-5 space-y-4">

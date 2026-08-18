@@ -59,10 +59,9 @@ export interface Patent {
   year: number | null;
   title: string;
   inventors: string | null;
-  number: string | null; // 출원/등록번호
+  number: string | null; // 등록번호
   country: string | null; // 'KR' | 'US' | ...
-  status: "applied" | "registered";
-  filing_date: string | null;
+  filing_date: string | null; // 등록/출원일 표기용 문자열
 }
 
 export interface Asset {

@@ -10,8 +10,9 @@ cd "$(dirname "$0")/.."
 REPO="${1:-hanyangcna/cna-lab-web}"
 [ -n "${GH_TOKEN:-}" ] || { echo "GH_TOKEN 환경변수에 토큰을 넣어 실행하세요" >&2; exit 1; }
 
-BASE_PATH="/${REPO#*/}"
-echo "빌드: basePath=$BASE_PATH (PDF 비활성)"
+# 커스텀 도메인(cna.hanyang.ac.kr) 루트 서빙 → basePath 없음
+BASE_PATH="${BASE_PATH_OVERRIDE:-}"
+echo "빌드: basePath='${BASE_PATH}' (PDF 비활성)"
 docker build -q \
   --build-arg NEXT_PUBLIC_BASE_PATH="$BASE_PATH" \
   --build-arg NEXT_PUBLIC_PDF_BASE_URL="" \

@@ -25,16 +25,16 @@ export function QuickNav() {
 
       <div className="my-1 h-px bg-white/10" />
 
-      <Link href="/publications" className={itemClass}>
+      <Link href="/#publications" className={itemClass}>
         Publications
       </Link>
-      <Link href="/patents" className={itemClass}>
+      <Link href="/#patents" className={itemClass}>
         Patents
       </Link>
-      <Link href="/people" className={itemClass}>
+      <Link href="/#people" className={itemClass}>
         People
       </Link>
-      <Link href="/lectures" className={itemClass}>
+      <Link href="/#seminars" className={itemClass}>
         Seminars
       </Link>
 

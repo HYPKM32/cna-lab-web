@@ -7,12 +7,13 @@ export const SITE = {
   pi: "Prof. Jong-Min Lee",
 };
 
+// 원페이지 구조: 탭은 홈의 해당 섹션으로 스크롤 이동
 export const NAV = [
   { href: "/", label: "Introduction" },
-  { href: "/publications", label: "Publications" },
-  { href: "/patents", label: "Patents" },
-  { href: "/people", label: "People" },
-  { href: "/lectures", label: "Seminars" },
+  { href: "/#publications", label: "Publications" },
+  { href: "/#patents", label: "Patents" },
+  { href: "/#people", label: "People" },
+  { href: "/#seminars", label: "Seminars" },
 ];
 
 export const PUB_TYPE_LABEL: Record<PubType, string> = {

@@ -1,5 +1,10 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { getStats, getPublications } from "@/lib/data";
+import { PublicationsBrowser } from "@/components/publications-browser";
+import { PatentsBrowser } from "@/components/patents-browser";
+import { LecturesBrowser } from "@/components/lectures-browser";
+import PeopleSection from "./people/page";
 import { getResearchSections } from "@/lib/figures";
 import { asset } from "@/lib/asset";
 import { SITE } from "@/lib/labels";
@@ -209,8 +214,30 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* 다크 → 화이트 전환 (푸터로 자연스럽게) */}
+        {/* 다크 → 화이트 전환 (이후 밝은 섹션들로 이어짐) */}
         <div className="h-32 bg-gradient-to-b from-slate-900 to-white" />
+      </section>
+
+      {/* ── 원페이지 섹션: 논문 ── */}
+      <section id="publications" className="scroll-mt-14">
+        <Suspense>
+          <PublicationsBrowser />
+        </Suspense>
+      </section>
+
+      {/* ── 특허 ── */}
+      <section id="patents" className="scroll-mt-14 border-t border-slate-200">
+        <PatentsBrowser />
+      </section>
+
+      {/* ── 구성원 ── */}
+      <section id="people" className="scroll-mt-14 border-t border-slate-200">
+        <PeopleSection />
+      </section>
+
+      {/* ── 세미나 ── */}
+      <section id="seminars" className="scroll-mt-14 border-t border-slate-200">
+        <LecturesBrowser />
       </section>
     </>
   );

@@ -96,8 +96,9 @@ export default async function HomePage() {
                     <span className="text-sky-300">★</span>
                     Highlighted Publications
                   </h2>
+                  {/* 원페이지: 필터를 Highlights 로 바꾸고 Publications 섹션으로 스크롤 */}
                   <Link
-                    href="/publications?type=highlight"
+                    href="/?type=highlight#publications"
                     className="text-sm font-medium text-sky-300 hover:text-sky-200"
                   >
                     See all →

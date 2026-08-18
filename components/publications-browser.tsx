@@ -1,7 +1,7 @@
 "use client";
 // 정적 사이트용 Publications 목록 — 서버 쿼리 파라미터 대신
 // 클라이언트 상태로 type/year 필터링 (?type= 딥링크는 초기값으로만 반영)
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   getPublications,
@@ -37,6 +37,16 @@ export function PublicationsBrowser() {
     "all") as FilterKey;
   const [active, setActive] = useState<FilterKey>(initial);
   const [activeYear, setActiveYear] = useState<string | null>(null);
+
+  // 홈 "See all →" 처럼 같은 페이지에서 ?type= 이 바뀌면 필터를 전환
+  const typeParam = params.get("type");
+  useEffect(() => {
+    const key = PUB_FILTERS.find((f) => f.key === typeParam)?.key;
+    if (key) {
+      setActive(key as FilterKey);
+      setActiveYear(null);
+    }
+  }, [typeParam]);
 
   // 전체 연도를 한 번에 렌더링 — 연도 탭은 필터가 아니라 해당 위치로 점프하는 앵커
   const pubs = useMemo(
@@ -78,54 +88,54 @@ export function PublicationsBrowser() {
         </p>
       </header>
 
-      {/* Filter tabs — 테두리로 살짝 강조 */}
-      <div className="mt-8 inline-flex flex-wrap gap-2 rounded-2xl border border-sky-300 bg-white p-2">
-        {PUB_FILTERS.map((f) => {
-          const isActive = f.key === active;
-          return (
-            <button
-              key={f.key}
-              type="button"
-              onClick={() => pickType(f.key as FilterKey)}
-              className={
-                "rounded-full px-5 py-2.5 text-base font-medium transition " +
-                (isActive
-                  ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200")
-              }
-            >
-              {f.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Year jump bar — 상단 고정, 누르면 해당 연도 위치로 스크롤 */}
-      {years.length > 1 && (
-        <div className="sticky top-2 z-20 mt-6 flex flex-wrap gap-1.5 rounded-2xl border border-sky-300 bg-white/95 px-3 py-2.5 backdrop-blur">
-          {years.map((y) => (
-            <button
-              key={y}
-              type="button"
-              onClick={() => jumpTo(y)}
-              className={
-                "rounded-full px-4 py-2 text-sm font-semibold transition " +
-                (activeYear === y
-                  ? "bg-sky-600 text-white"
-                  : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700")
-              }
-            >
-              {y}
-            </button>
-          ))}
+      {/* 필터 패널 — 종류 + 연도 점프를 한 덩어리로 상단 고정 */}
+      <div className="sticky top-2 z-20 mt-8 space-y-2.5 rounded-2xl border border-sky-300 bg-white/95 p-2.5 backdrop-blur">
+        <div className="flex flex-wrap gap-1.5">
+          {PUB_FILTERS.map((f) => {
+            const isActive = f.key === active;
+            return (
+              <button
+                key={f.key}
+                type="button"
+                onClick={() => pickType(f.key as FilterKey)}
+                className={
+                  "rounded-full px-4 py-2 text-sm font-medium transition sm:px-5 sm:text-base " +
+                  (isActive
+                    ? "bg-slate-900 text-white"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200")
+                }
+              >
+                {f.label}
+              </button>
+            );
+          })}
         </div>
-      )}
+        {years.length > 1 && (
+          <div className="flex flex-wrap gap-1.5 border-t border-slate-100 pt-2.5">
+            {years.map((y) => (
+              <button
+                key={y}
+                type="button"
+                onClick={() => jumpTo(y)}
+                className={
+                  "rounded-full px-3.5 py-1.5 text-sm font-semibold transition " +
+                  (activeYear === y
+                    ? "bg-sky-600 text-white"
+                    : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700")
+                }
+              >
+                {y}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Grouped list — 전체 연도 렌더링 */}
       <div className="mt-8 space-y-12">
         {grouped.map(([year, list]) => (
-          <section key={year} id={`pub-year-${year}`} className="scroll-mt-28">
-            <h2 className="sticky top-16 z-10 -mx-2 bg-white/90 px-2 py-2 font-serif text-3xl font-bold text-slate-900 backdrop-blur">
+          <section key={year} id={`pub-year-${year}`} className="scroll-mt-52 sm:scroll-mt-44">
+            <h2 className="font-serif text-3xl font-bold text-slate-900">
               {year}
             </h2>
             <ol className="mt-5 space-y-4">

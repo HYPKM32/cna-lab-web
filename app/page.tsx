@@ -62,7 +62,7 @@ export default async function HomePage() {
       <section id="overview" className="relative z-10 scroll-mt-20 bg-slate-950 lg:-mt-28">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 pt-10 lg:grid-cols-[1fr_1.6fr] lg:pt-8">
           {/* 통계 — 왼쪽 */}
-          <Reveal>
+          <Reveal className="min-w-0">
             {/* 모바일: 한 줄씩(라벨 좌·숫자 우) / 태블릿: 3열 / 데스크톱: 세로 사이드 */}
             <dl className="grid h-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-1">
               {[
@@ -87,7 +87,7 @@ export default async function HomePage() {
 
           {/* 하이라이트 — 오른쪽, 항목당 한 줄 */}
           {highlights.length > 0 && (
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} className="min-w-0">
               <div className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-slate-900/70 p-6 ring-1 ring-sky-400/20 backdrop-blur-md">
                 {/* 상단 얇은 하늘색 액센트 라인 */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-sky-400/60 to-transparent" />

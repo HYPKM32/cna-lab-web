@@ -1,6 +1,7 @@
-# GitHub Pages 자동 배포
-# main 브랜치에 push 하면 정적 빌드(out/) → Pages 게시
-# 저장소 Settings → Pages → Source 를 "GitHub Actions" 로 설정해 둘 것
+# GitHub Pages 자동 배포 — gh-pages 브랜치 방식
+# main 에 push → 정적 빌드(out/) → gh-pages 브랜치로 push → Pages 가 자동 게시
+# (actions/deploy-pages 의 "in progress deployment" 잠금 버그를 피하기 위해
+#  브랜치 게시 방식을 사용. Pages 설정: Source = gh-pages 브랜치)
 name: Deploy to GitHub Pages
 
 on:
@@ -9,18 +10,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# 배포 직렬화: 진행 중 배포를 취소하지 않고 끝날 때까지 대기
-# (중간 취소된 배포가 Pages 서버에 고아로 남아 후속 배포를 막는 문제 방지)
+# 배포 직렬화: 진행 중 배포를 취소하지 않고 대기
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,29 +28,17 @@ jobs:
           node-version: 22
           cache: npm
 
-      # 커스텀 도메인(cna.hanyang.ac.kr) 루트로 서빙 → basePath 없음
-      # (커스텀 도메인을 제거하고 user.github.io/<repo> 로 돌아가면 "/<repo>" 로 복원할 것)
-      - name: Resolve basePath
-        run: echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
-
       - run: npm ci
 
-      # PDF 원문 호스트(선택): 저장소 Settings → Variables 에 PDF_BASE_URL 을 등록하면
-      # Publications/Seminars 의 View 버튼이 활성화됨 (예: https://files.cna-lab.org)
+      # 커스텀 도메인(cna.hanyang.ac.kr) 루트 서빙 → basePath 없음
+      # PDF 원문 호스트(선택): 저장소 Variables 에 PDF_BASE_URL 등록 시 View 버튼 활성화
       - run: npm run build
         env:
+          NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_PDF_BASE_URL: ${{ vars.PDF_BASE_URL }}
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: peaceiris/actions-gh-pages@v4
         with:
-          path: out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          cname: cna.hanyang.ac.kr

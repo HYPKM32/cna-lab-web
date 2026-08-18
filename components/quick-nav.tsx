@@ -25,6 +25,9 @@ export function QuickNav() {
 
       <div className="my-1 h-px bg-white/10" />
 
+      <Link href="/" className={itemClass}>
+        Introduction
+      </Link>
       <Link href="/#publications" className={itemClass}>
         Publications
       </Link>

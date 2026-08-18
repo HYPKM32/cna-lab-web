@@ -48,7 +48,11 @@ export function PublicationsBrowser() {
 
   const pickType = (key: FilterKey) => {
     setActive(key);
-    window.scrollTo({ top: 0 });
+    setActiveYear(null);
+    // 원페이지에선 맨 위(히어로)가 아니라 Publications 섹션 시작으로
+    const anchor = document.getElementById("publications");
+    if (anchor) anchor.scrollIntoView({ block: "start" });
+    else window.scrollTo({ top: 0 });
   };
 
   const jumpTo = (y: string) => {

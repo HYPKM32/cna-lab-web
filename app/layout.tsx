@@ -54,7 +54,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-white font-sans text-slate-900">
+      {/* pb: 모바일 하단 퀵바에 푸터가 가리지 않도록 여백 */}
+      <body className="flex min-h-full flex-col bg-white pb-14 font-sans text-slate-900 md:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

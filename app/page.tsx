@@ -85,7 +85,8 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 lg:grid-cols-[1fr_1.6fr]">
           {/* 통계 — 왼쪽 */}
           <Reveal>
-            <dl className="grid h-full grid-cols-3 gap-3 lg:grid-cols-1">
+            {/* 모바일: 한 줄씩(라벨 좌·숫자 우) / 태블릿: 3열 / 데스크톱: 세로 사이드 */}
+            <dl className="grid h-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-1">
               {[
                 { label: "Publications", value: stats.publications },
                 { label: "Members & Alumni", value: stats.people },
@@ -93,12 +94,12 @@ export default async function HomePage() {
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="flex flex-col items-center justify-center gap-1 rounded-2xl bg-slate-900/70 px-4 py-4 ring-1 ring-white/15 backdrop-blur-md transition hover:bg-slate-900/80 lg:flex-row lg:justify-between lg:px-6"
+                  className="flex flex-row items-center justify-between gap-1 rounded-2xl bg-slate-900/70 px-5 py-3 ring-1 ring-white/15 backdrop-blur-md transition hover:bg-slate-900/80 sm:flex-col sm:justify-center sm:px-4 sm:py-4 lg:flex-row lg:justify-between lg:px-6"
                 >
                   <dt className="text-xs font-medium uppercase tracking-wide text-slate-400 lg:text-sm">
                     {s.label}
                   </dt>
-                  <dd className="text-3xl font-bold tracking-tight text-white">
+                  <dd className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
                     <CountUp to={s.value} />
                   </dd>
                 </div>

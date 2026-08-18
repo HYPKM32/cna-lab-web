@@ -1,10 +1,10 @@
 {
- "id": 4,
- "name": "Sohui Kim",
- "role": "PhD course in Dept. of Electronic Engineering, Hanyang University",
- "email": "kimsohui2457@hanyang.ac.kr",
- "category": "current",
- "photo_key": "file/sub3_1/3530936850_hpGqPVaf_a272a561dbdaa245c526d8c2e3647ffd1e583ccf.jpg",
- "sort_order": 0,
- "affiliation": null
+  "id": 4,
+  "category": "alumni_phd",
+  "name": "Sohui Kim",
+  "role": "Ph.D. Dept. of Electronic Engineering, Hanyang University",
+  "email": "kimsohui2457@hanyang.ac.kr",
+  "affiliation": "",
+  "photo_key": "file/sub3_1/3530936850_hpGqPVaf_a272a561dbdaa245c526d8c2e3647ffd1e583ccf.jpg",
+  "sort_order": 0
 }

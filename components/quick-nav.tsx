@@ -28,6 +28,9 @@ export function QuickNav() {
       <Link href="/publications" className={itemClass}>
         Publications
       </Link>
+      <Link href="/patents" className={itemClass}>
+        Patents
+      </Link>
       <Link href="/people" className={itemClass}>
         People
       </Link>

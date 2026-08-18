@@ -10,6 +10,7 @@ export const SITE = {
 export const NAV = [
   { href: "/", label: "Home" },
   { href: "/publications", label: "Publications" },
+  { href: "/patents", label: "Patents" },
   { href: "/people", label: "People" },
   { href: "/lectures", label: "Seminars" },
 ];

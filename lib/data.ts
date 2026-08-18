@@ -3,6 +3,7 @@
 import publicationsJson from "@/data/publications.json";
 import peopleJson from "@/data/people.json";
 import lecturesJson from "@/data/lectures.json";
+import patentsJson from "@/data/patents.json";
 import assetsJson from "@/content/assets.json";
 
 // --- 타입 (기존 CNA 스키마와 동일) ---
@@ -53,6 +54,17 @@ export interface Lecture {
   speaker: string | null;
 }
 
+export interface Patent {
+  id: number;
+  year: number | null;
+  title: string;
+  inventors: string | null;
+  number: string | null; // 출원/등록번호
+  country: string | null; // 'KR' | 'US' | ...
+  status: "applied" | "registered";
+  filing_date: string | null;
+}
+
 export interface Asset {
   id: number;
   owner_type: "publication" | "lecture";
@@ -79,6 +91,10 @@ const lectures: Lecture[] = (lecturesJson as Lecture[])
   .slice()
   .sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || b.id - a.id);
 
+const patents: Patent[] = (patentsJson as Patent[])
+  .slice()
+  .sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || b.id - a.id);
+
 const assets: Asset[] = (assetsJson as Asset[]).slice().sort((a, b) => a.id - b.id);
 
 // --- 도메인 헬퍼 (기존 시그니처 유지 — await 해도 무방) ---
@@ -94,6 +110,10 @@ export function getPeople() {
 
 export function getLectures() {
   return lectures;
+}
+
+export function getPatents() {
+  return patents;
 }
 
 export function getAssetsByOwner(ownerType: Asset["owner_type"]) {

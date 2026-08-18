@@ -1,0 +1,10 @@
+{
+ "id": 1,
+ "year": 2025,
+ "title": "예시 특허입니다 — /admin 에서 이 항목을 지우고 실제 특허를 등록하세요",
+ "inventors": "홍길동, 김아무개",
+ "number": "10-2025-0000000",
+ "country": "KR",
+ "status": "registered",
+ "filing_date": "2025.01.01"
+}

@@ -36,31 +36,24 @@ export function PublicationsBrowser() {
   const initial = (PUB_FILTERS.find((f) => f.key === params.get("type"))?.key ??
     "all") as FilterKey;
   const [active, setActive] = useState<FilterKey>(initial);
-  // undefined = 기본(최신 연도)
-  const [year, setYear] = useState<string | undefined>(undefined);
 
+  // 전체 연도를 한 번에 렌더링 — 연도 탭은 필터가 아니라 해당 위치로 점프하는 앵커
   const pubs = useMemo(
     () => getPublications(active === "all" ? undefined : active),
     [active],
   );
   const grouped = useMemo(() => groupByYear(pubs), [pubs]);
   const years = grouped.map(([y]) => y);
-  const latest = years[0];
-
-  // 하이라이트는 항상 최신 연도만. 그 외엔 연도 선택(기본: 최신 연도)
-  const selected =
-    active === "highlight"
-      ? latest
-      : year === "all" || (year && years.includes(year))
-        ? year
-        : latest;
-  const visible =
-    selected === "all" ? grouped : grouped.filter(([y]) => y === selected);
 
   const pickType = (key: FilterKey) => {
     setActive(key);
-    setYear(undefined);
+    window.scrollTo({ top: 0 });
   };
+
+  const jumpTo = (y: string) =>
+    document
+      .getElementById(`year-${y}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
     <PdfViewerProvider>
@@ -100,35 +93,27 @@ export function PublicationsBrowser() {
         })}
       </div>
 
-      {/* Year tabs (하이라이트는 최신 연도 고정이라 숨김) */}
-      {active !== "highlight" && years.length > 1 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {["all", ...years].map((y) => {
-            const isActive = y === selected;
-            return (
-              <button
-                key={y}
-                type="button"
-                onClick={() => setYear(y)}
-                className={
-                  "rounded-full px-4 py-2 text-sm font-semibold transition " +
-                  (isActive
-                    ? "bg-sky-600 text-white"
-                    : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700")
-                }
-              >
-                {y === "all" ? "All years" : y}
-              </button>
-            );
-          })}
+      {/* Year jump bar — 상단 고정, 누르면 해당 연도 위치로 스크롤 */}
+      {years.length > 1 && (
+        <div className="sticky top-0 z-20 -mx-2 mt-6 flex flex-wrap gap-1.5 bg-white/95 px-2 py-3 backdrop-blur">
+          {years.map((y) => (
+            <button
+              key={y}
+              type="button"
+              onClick={() => jumpTo(y)}
+              className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-500 ring-1 ring-slate-200 transition hover:bg-sky-50 hover:text-sky-700"
+            >
+              {y}
+            </button>
+          ))}
         </div>
       )}
 
-      {/* Grouped list */}
-      <div className="mt-12 space-y-12">
-        {visible.map(([year, list]) => (
-          <section key={year}>
-            <h2 className="sticky top-0 z-10 -mx-2 bg-white/90 px-2 py-2 font-serif text-3xl font-bold text-slate-900 backdrop-blur">
+      {/* Grouped list — 전체 연도 렌더링 */}
+      <div className="mt-8 space-y-12">
+        {grouped.map(([year, list]) => (
+          <section key={year} id={`year-${year}`} className="scroll-mt-20">
+            <h2 className="sticky top-14 z-10 -mx-2 bg-white/90 px-2 py-2 font-serif text-3xl font-bold text-slate-900 backdrop-blur">
               {year}
             </h2>
             <ol className="mt-5 space-y-4">

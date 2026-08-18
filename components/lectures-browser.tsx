@@ -35,7 +35,7 @@ export function LecturesBrowser() {
 
   return (
     <PdfViewerProvider>
-    <div className="mx-auto max-w-6xl px-6 py-16">
+    <div className="mx-auto max-w-7xl px-6 py-16">
       {/* 학술지 표지 느낌의 헤더 (Publications/People 과 통일) */}
       <header className="border-b-4 border-double border-slate-900 pb-8">
         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-sky-700">

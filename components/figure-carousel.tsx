@@ -30,9 +30,11 @@ export function FigureCarousel({ figures }: { figures: Figure[] }) {
   const prev = () => setIdx((i) => (i - 1 + n) % n);
   const next = () => setIdx((i) => (i + 1) % n);
 
+  // 모바일: 화면 위 오버레이 / 데스크톱(sm+): 화면 밖 양옆
   const arrowClass =
-    "shrink-0 rounded-full bg-slate-800 p-3 text-white ring-1 ring-white/20 shadow-lg transition " +
-    "hover:bg-sky-500/40 hover:ring-sky-400/50";
+    "z-10 rounded-full bg-slate-800/75 p-2 text-white ring-1 ring-white/20 shadow-lg transition " +
+    "hover:bg-sky-500/40 hover:ring-sky-400/50 " +
+    "absolute top-1/2 -translate-y-1/2 sm:static sm:top-auto sm:translate-y-0 sm:shrink-0 sm:bg-slate-800 sm:p-3";
 
   return (
     <div>
@@ -49,10 +51,15 @@ export function FigureCarousel({ figures }: { figures: Figure[] }) {
         )}
       </div>
 
-      {/* 화살표(화면 밖) + 송출 화면 */}
-      <div className="flex items-center gap-3 sm:gap-4">
+      {/* 화살표 + 송출 화면 (모바일: 오버레이 / 데스크톱: 화면 밖) */}
+      <div className="relative sm:flex sm:items-center sm:gap-4">
         {many && (
-          <button type="button" aria-label="Previous figure" onClick={prev} className={arrowClass}>
+          <button
+            type="button"
+            aria-label="Previous figure"
+            onClick={prev}
+            className={`${arrowClass} left-1.5`}
+          >
             <Chevron dir="left" />
           </button>
         )}
@@ -74,7 +81,12 @@ export function FigureCarousel({ figures }: { figures: Figure[] }) {
           </div>
         </div>
         {many && (
-          <button type="button" aria-label="Next figure" onClick={next} className={arrowClass}>
+          <button
+            type="button"
+            aria-label="Next figure"
+            onClick={next}
+            className={`${arrowClass} right-1.5`}
+          >
             <Chevron dir="right" />
           </button>
         )}

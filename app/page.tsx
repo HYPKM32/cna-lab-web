@@ -63,18 +63,21 @@ export default async function HomePage() {
         <nav className="pointer-events-none sticky top-3 z-30 flex justify-center px-4 pb-8">
           <div className="pointer-events-auto flex max-w-full flex-wrap justify-center gap-1 overflow-x-auto rounded-full bg-slate-900/85 px-2.5 py-2 shadow-lg shadow-sky-500/10 ring-1 ring-sky-400/30 backdrop-blur-md">
             {[
-              { href: "#overview", label: "Overview" },
+              { href: "#overview", label: "Overview", short: "Overview" },
               ...research.map((sec, i) => ({
                 href: `#research-${i + 1}`,
                 label: `${String(i + 1).padStart(2, "0")} ${sec.title}`,
+                // 모바일에선 번호만
+                short: String(i + 1).padStart(2, "0"),
               })),
             ].map((t) => (
               <a
                 key={t.href}
                 href={t.href}
-                className="whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-semibold text-slate-300 transition hover:bg-sky-400/15 hover:text-sky-300"
+                className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold text-slate-300 transition hover:bg-sky-400/15 hover:text-sky-300 sm:px-4"
               >
-                {t.label}
+                <span className="sm:hidden">{t.short}</span>
+                <span className="hidden sm:inline">{t.label}</span>
               </a>
             ))}
           </div>

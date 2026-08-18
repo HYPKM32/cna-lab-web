@@ -5,17 +5,18 @@ import { asset } from "@/lib/asset";
 export function SiteHeader() {
   return (
     <header className="border-b border-black/5 bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      {/* 모바일: 로고 줄 + 가로 스크롤 탭 줄 / 데스크톱: 한 줄 */}
+      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6 md:py-4">
         <Link href="/" className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={asset("/cna-logo.png")}
             alt={SITE.name}
-            className="h-16 w-auto rounded-xl"
+            className="h-12 w-auto rounded-xl md:h-16"
           />
-          <span className="h-10 w-px bg-slate-200" />
+          <span className="h-8 w-px bg-slate-200 md:h-10" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={asset("/hyu-logo.png")} alt="Hanyang University" className="h-11 w-auto" />
+          <img src={asset("/hyu-logo.png")} alt="Hanyang University" className="h-8 w-auto md:h-11" />
           {/* 소속 학과 — 로고 옆 두 줄 */}
           <span className="hidden flex-col justify-center text-[11px] font-medium leading-tight text-slate-500 sm:flex">
             {SITE.org
@@ -26,12 +27,12 @@ export function SiteHeader() {
               ))}
           </span>
         </Link>
-        <nav className="flex items-center gap-1">
+        <nav className="-mx-4 flex items-center gap-1 overflow-x-auto px-4 md:mx-0 md:px-0">
           {NAV.map((n) => (
             <Link
               key={n.href}
               href={n.href}
-              className="rounded-full px-5 py-2.5 text-lg font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
+              className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 md:px-5 md:py-2.5 md:text-lg"
             >
               {n.label}
             </Link>

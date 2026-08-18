@@ -225,20 +225,36 @@ export default async function HomePage() {
         </Suspense>
       </section>
 
+      <SectionDivider />
+
       {/* ── 특허 ── */}
-      <section id="patents" className="scroll-mt-14 border-t border-slate-200">
+      <section id="patents" className="scroll-mt-14">
         <PatentsBrowser />
       </section>
 
+      <SectionDivider />
+
       {/* ── 구성원 ── */}
-      <section id="people" className="scroll-mt-14 border-t border-slate-200">
+      <section id="people" className="scroll-mt-14">
         <PeopleSection />
       </section>
 
+      <SectionDivider />
+
       {/* ── 세미나 ── */}
-      <section id="seminars" className="scroll-mt-14 border-t border-slate-200">
+      <section id="seminars" className="scroll-mt-14">
         <LecturesBrowser />
       </section>
     </>
+  );
+}
+
+// 대분류 섹션 사이 구분선 — 중앙이 진하고 양끝으로 사라지는 그라데이션 헤어라인
+function SectionDivider() {
+  return (
+    <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
+      <div className="mx-auto -mt-[3px] h-1.5 w-24 rounded-full bg-gradient-to-r from-transparent via-sky-400/50 to-transparent" />
+    </div>
   );
 }

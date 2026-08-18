@@ -88,9 +88,10 @@ export function PublicationsBrowser() {
         </p>
       </header>
 
-      {/* 필터 패널 — 종류 + 연도 점프를 한 덩어리로 상단 고정 */}
-      <div className="sticky top-2 z-20 mt-8 space-y-2.5 rounded-2xl border border-sky-300 bg-white/95 p-2.5 backdrop-blur">
-        <div className="flex flex-wrap gap-1.5">
+      {/* 필터 패널 — 종류 + 연도 점프를 한 덩어리로 상단 고정
+          모바일: 각 줄을 가로 스크롤 한 줄로 압축 / 데스크톱: 줄바꿈 */}
+      <div className="sticky top-2 z-20 mt-8 space-y-1.5 rounded-2xl border border-sky-300 bg-white/95 p-1.5 backdrop-blur sm:space-y-2.5 sm:p-2.5">
+        <div className="flex flex-nowrap gap-1.5 overflow-x-auto sm:flex-wrap sm:overflow-visible">
           {PUB_FILTERS.map((f) => {
             const isActive = f.key === active;
             return (
@@ -99,7 +100,7 @@ export function PublicationsBrowser() {
                 type="button"
                 onClick={() => pickType(f.key as FilterKey)}
                 className={
-                  "rounded-full px-4 py-2 text-sm font-medium transition sm:px-5 sm:text-base " +
+                  "whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition sm:px-5 sm:py-2 sm:text-base " +
                   (isActive
                     ? "bg-slate-900 text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200")
@@ -111,14 +112,14 @@ export function PublicationsBrowser() {
           })}
         </div>
         {years.length > 1 && (
-          <div className="flex flex-wrap gap-1.5 border-t border-slate-100 pt-2.5">
+          <div className="flex flex-nowrap gap-1.5 overflow-x-auto border-t border-slate-100 pt-1.5 sm:flex-wrap sm:overflow-visible sm:pt-2.5">
             {years.map((y) => (
               <button
                 key={y}
                 type="button"
                 onClick={() => jumpTo(y)}
                 className={
-                  "rounded-full px-3.5 py-1.5 text-sm font-semibold transition " +
+                  "whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold transition sm:px-3.5 sm:py-1.5 sm:text-sm " +
                   (activeYear === y
                     ? "bg-sky-600 text-white"
                     : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700")
@@ -134,7 +135,7 @@ export function PublicationsBrowser() {
       {/* Grouped list — 전체 연도 렌더링 */}
       <div className="mt-8 space-y-12">
         {grouped.map(([year, list]) => (
-          <section key={year} id={`pub-year-${year}`} className="scroll-mt-52 sm:scroll-mt-44">
+          <section key={year} id={`pub-year-${year}`} className="scroll-mt-32 sm:scroll-mt-44">
             <h2 className="font-serif text-3xl font-bold text-slate-900">
               {year}
             </h2>

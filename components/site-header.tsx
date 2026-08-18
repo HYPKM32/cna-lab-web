@@ -18,7 +18,8 @@ export function SiteHeader() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={asset("/hyu-logo.png")} alt="Hanyang University" className="h-8 w-auto md:h-11" />
           {/* 소속 학과 — 로고 옆 두 줄 */}
-          <span className="hidden flex-col justify-center text-[11px] font-medium leading-tight text-slate-500 lg:flex">
+          {/* 학과명 — 네비와 안 겹치는 넓은 화면(xl+)에서만, 항상 한 줄 유지 */}
+          <span className="hidden flex-col justify-center text-[11px] font-medium leading-tight text-slate-500 xl:flex">
             {SITE.org
               .split(/ & |, /)
               .filter((line) => !/hanyang/i.test(line))
@@ -30,12 +31,12 @@ export function SiteHeader() {
               ))}
           </span>
         </Link>
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden shrink-0 items-center gap-1 md:flex">
           {NAV.map((n) => (
             <Link
               key={n.href}
               href={n.href}
-              className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 md:px-5 md:py-2.5 md:text-lg"
+              className="whitespace-nowrap rounded-full px-3 py-2 text-base font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 xl:px-5 xl:py-2.5 xl:text-lg"
             >
               {n.label}
             </Link>

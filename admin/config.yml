@@ -1,0 +1,122 @@
+# Sveltia CMS 설정 — https://hanyangcna.github.io/cna-lab-web/admin/
+# 편집 권한 = GitHub 저장소(hanyangcna/cna-lab-web) 협업자
+backend:
+  name: github
+  repo: hanyangcna/cna-lab-web
+  branch: main
+  # OAuth 중계: sveltia-cms-auth (Cloudflare Worker, hanyangcna 계정)
+  base_url: https://sveltia-cms-auth.hanyangcna.workers.dev
+
+# 사진 업로드 저장 위치 (저장소 내)
+media_folder: public/uploads/cms
+public_folder: /uploads/cms
+
+collections:
+  # ── 논문 ─────────────────────────────────────────────
+  - name: publications
+    label: 논문 (Publications)
+    label_singular: 논문
+    folder: content/publications
+    format: json
+    extension: json
+    create: true
+    delete: true
+    slug: "pub-{{year}}-{{slug}}"
+    summary: "[{{year}}] {{title}}"
+    sortable_fields: [year, title]
+    fields:
+      - { label: "ID (수정 금지)", name: id, widget: hidden, required: false }
+      - label: 종류
+        name: type
+        widget: select
+        default: journal
+        options:
+          - { label: "International Journal", value: journal }
+          - { label: "Conference", value: conference }
+          - { label: "Domestic Journal", value: domestic_journal }
+          - { label: "Domestic Conference", value: domestic_conf }
+          - { label: "Lecture", value: lecture }
+      - { label: 연도, name: year, widget: number, value_type: int }
+      - { label: 제목, name: title, widget: string }
+      - { label: "저널/학회명", name: venue, widget: string, required: false }
+      - { label: "권/호 (예: Vol. 53(2),)", name: volume, widget: string, required: false }
+      - { label: "페이지 (예: p. 121-128,)", name: pages, widget: string, required: false }
+      - { label: 저자, name: authors, widget: text, required: false }
+      - { label: "원문 링크 (DOI 등)", name: link_url, widget: string, required: false }
+      - { label: "홈 화면 하이라이트", name: is_highlight, widget: boolean, default: false }
+
+  # ── 특허 ─────────────────────────────────────────────
+  - name: patents
+    label: 특허 (Patents)
+    label_singular: 특허
+    folder: content/patents
+    format: json
+    extension: json
+    create: true
+    delete: true
+    slug: "patent-{{year}}-{{slug}}"
+    summary: "[{{year}}] {{title}}"
+    sortable_fields: [year, title]
+    fields:
+      - { label: "ID (수정 금지)", name: id, widget: hidden, required: false }
+      - { label: 연도, name: year, widget: number, value_type: int }
+      - { label: "발명 명칭", name: title, widget: string }
+      - { label: 발명자, name: inventors, widget: string, required: false }
+      - { label: 등록번호, name: number, widget: string, required: false }
+      - label: 국가
+        name: country
+        widget: select
+        default: KR
+        options: [KR, US, EP, JP, CN, PCT]
+      - { label: "등록일 (예: 2024.03.15)", name: filing_date, widget: string, required: false }
+
+  # ── 구성원 ───────────────────────────────────────────
+  - name: people
+    label: 구성원 (People)
+    label_singular: 구성원
+    folder: content/people
+    format: json
+    extension: json
+    create: true
+    delete: true
+    slug: "person-{{slug}}"
+    summary: "{{name}} — {{role}}"
+    fields:
+      - { label: "ID (수정 금지)", name: id, widget: hidden, required: false }
+      - label: 분류
+        name: category
+        widget: select
+        default: current
+        options:
+          - { label: "현재 멤버", value: current }
+          - { label: "학부생", value: undergraduate }
+          - { label: "졸업생 · Post Doc.", value: alumni_postdoc }
+          - { label: "졸업생 · Ph.D.", value: alumni_phd }
+          - { label: "졸업생 · M.S.", value: alumni_ms }
+          - { label: "졸업생 · Visiting", value: alumni_visiting }
+      - { label: 이름, name: name, widget: string }
+      - { label: "직책/과정 (예: Ph.D. Candidate)", name: role, widget: string, required: false }
+      - { label: 이메일, name: email, widget: string, required: false }
+      - { label: "현재 소속 (졸업생)", name: affiliation, widget: string, required: false }
+      - { label: 사진, name: photo_key, widget: image, required: false }
+      - { label: "표시 순서 (작을수록 앞)", name: sort_order, widget: number, required: false }
+
+  # ── 세미나 ───────────────────────────────────────────
+  - name: lectures
+    label: 세미나 (Seminars)
+    label_singular: 세미나
+    folder: content/lectures
+    format: json
+    extension: json
+    create: true
+    delete: true
+    slug: "lec-{{year}}-{{slug}}"
+    summary: "[{{year}}] {{title}}"
+    sortable_fields: [year, title]
+    fields:
+      - { label: "ID (수정 금지)", name: id, widget: hidden, required: false }
+      - { label: 연도, name: year, widget: number, value_type: int }
+      - { label: 주제, name: title, widget: string }
+      - { label: "날짜 (예: 2025.11.25)", name: lecture_date, widget: string, required: false }
+      - { label: 장소, name: location, widget: string, required: false }
+      - { label: 연사, name: speaker, widget: string, required: false }

@@ -59,30 +59,7 @@ export default async function HomePage() {
 
       {/* Stats + Highlights — 배너 위로 끌어올려 겹치되, 아래는 다크로 이어짐 */}
       <section id="overview" className="relative z-10 -mt-24 scroll-mt-20 bg-slate-950 sm:-mt-28">
-        {/* 섹션 점프 바 — 스크롤 시 상단 고정, 누르면 해당 섹션으로 이동 */}
-        <nav className="pointer-events-none sticky top-3 z-30 flex justify-center px-4 pb-8">
-          <div className="pointer-events-auto flex max-w-full flex-wrap justify-center gap-1 overflow-x-auto rounded-full bg-slate-900/85 px-2.5 py-2 shadow-lg shadow-sky-500/10 ring-1 ring-sky-400/30 backdrop-blur-md">
-            {[
-              { href: "#overview", label: "Overview", short: "Overview" },
-              ...research.map((sec, i) => ({
-                href: `#research-${i + 1}`,
-                label: `${String(i + 1).padStart(2, "0")} ${sec.title}`,
-                // 모바일에선 번호만
-                short: String(i + 1).padStart(2, "0"),
-              })),
-            ].map((t) => (
-              <a
-                key={t.href}
-                href={t.href}
-                className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold text-slate-300 transition hover:bg-sky-400/15 hover:text-sky-300 sm:px-4"
-              >
-                <span className="sm:hidden">{t.short}</span>
-                <span className="hidden sm:inline">{t.label}</span>
-              </a>
-            ))}
-          </div>
-        </nav>
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 lg:grid-cols-[1fr_1.6fr]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 pt-8 lg:grid-cols-[1fr_1.6fr]">
           {/* 통계 — 왼쪽 */}
           <Reveal>
             {/* 모바일: 한 줄씩(라벨 좌·숫자 우) / 태블릿: 3열 / 데스크톱: 세로 사이드 */}

@@ -18,13 +18,13 @@ type FilterKey = PubType | "highlight" | "all";
 function groupByYear(pubs: Publication[]) {
   const map = new Map<string, Publication[]>();
   for (const p of pubs) {
-    const key = p.year ? String(p.year) : "Others";
+    const key = p.year ? String(p.year) : "In-progress";
     (map.get(key) ?? map.set(key, []).get(key)!).push(p);
   }
-  // 연도 내림차순, "Others"는 맨 뒤
+  // 연도 내림차순, "In-progress"(연도 미정)는 맨 뒤
   return [...map.entries()].sort((a, b) => {
-    if (a[0] === "Others") return 1;
-    if (b[0] === "Others") return -1;
+    if (a[0] === "In-progress") return 1;
+    if (b[0] === "In-progress") return -1;
     return Number(b[0]) - Number(a[0]);
   });
 }

@@ -6,6 +6,7 @@ import { SITE } from "@/lib/labels";
 import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
 import { UnderlineDraw } from "@/components/underline-draw";
+import { FigureCarousel } from "@/components/figure-carousel";
 
 export default async function HomePage() {
   const stats = getStats();
@@ -147,7 +148,7 @@ export default async function HomePage() {
             </h2>
           </Reveal>
 
-          <div className="mt-20 space-y-36">
+          <div className="mt-20 space-y-24">
             {research.map((sec, i) => (
               <div
                 key={sec.title}
@@ -168,26 +169,12 @@ export default async function HomePage() {
                   </div>
                 </div>
 
-                {/* 자료 — 각 이미지 상단에 소제목 */}
-                <div className="space-y-20">
+                {/* 자료 — 파트당 뷰어 하나, 화살표로 전후 넘김 */}
+                <div>
                   {sec.figures.length > 0 ? (
-                    sec.figures.map((fig, j) => (
-                      <Reveal key={fig.src} delay={j * 0.05}>
-                        <figure>
-                          <h4 className="mb-5 flex items-center gap-3 text-2xl font-bold tracking-tight text-white">
-                            <span className="h-6 w-1.5 rounded-full bg-sky-400" />
-                            {fig.label}
-                          </h4>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={fig.src}
-                            alt={fig.label}
-                            loading="lazy"
-                            className="w-full rounded-2xl shadow-2xl shadow-black/40 ring-1 ring-white/10"
-                          />
-                        </figure>
-                      </Reveal>
-                    ))
+                    <Reveal>
+                      <FigureCarousel figures={sec.figures} />
+                    </Reveal>
                   ) : (
                     <Reveal>
                       <p className="rounded-2xl border border-dashed border-white/15 p-10 text-base text-slate-500">

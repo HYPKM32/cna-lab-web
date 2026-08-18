@@ -28,16 +28,10 @@ jobs:
           node-version: 22
           cache: npm
 
-      # 프로젝트 사이트(user.github.io/<repo>)면 basePath="/<repo>",
-      # 사용자 사이트(<user>.github.io 저장소)면 basePath 없음 — 자동 판별
+      # 커스텀 도메인(cna.hanyang.ac.kr) 루트로 서빙 → basePath 없음
+      # (커스텀 도메인을 제거하고 user.github.io/<repo> 로 돌아가면 "/<repo>" 로 복원할 것)
       - name: Resolve basePath
-        run: |
-          REPO_NAME="${GITHUB_REPOSITORY#*/}"
-          if [[ "$REPO_NAME" == *.github.io ]]; then
-            echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
-          else
-            echo "NEXT_PUBLIC_BASE_PATH=/$REPO_NAME" >> "$GITHUB_ENV"
-          fi
+        run: echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
 
       - run: npm ci
 

@@ -1,10 +1,10 @@
 {
- "id": 14,
- "name": "Geunmo Park",
- "role": "MS Course in the Dept. of Artificial Intelligence, Hanyang University",
- "email": "rmsah32@hanyang.ac.kr",
- "category": "current",
- "photo_key": "file/sub3_1/3530937112_jedEIn6B_2036483e36398c49d554413ae980850025d362c6.png",
- "sort_order": 0,
- "affiliation": null
+  "id": 14,
+  "category": "current",
+  "name": "Keun-mo Park",
+  "role": "MS Course in the Dept. of Artificial Intelligence, Hanyang University",
+  "email": "rmsah32@hanyang.ac.kr",
+  "affiliation": "",
+  "photo_key": "file/sub3_1/3530937112_jedEIn6B_2036483e36398c49d554413ae980850025d362c6.png",
+  "sort_order": 0
 }

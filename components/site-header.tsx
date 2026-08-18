@@ -5,8 +5,8 @@ import { asset } from "@/lib/asset";
 export function SiteHeader() {
   return (
     <header className="border-b border-black/5 bg-white">
-      {/* 모바일: 로고 줄 + 가로 스크롤 탭 줄 / 데스크톱: 한 줄 */}
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6 md:py-4">
+      {/* 모바일: 로고만 (탭은 하단 퀵바가 대신) / 데스크톱: 로고 + 탭 한 줄 */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
         <Link href="/" className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -18,16 +18,19 @@ export function SiteHeader() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={asset("/hyu-logo.png")} alt="Hanyang University" className="h-8 w-auto md:h-11" />
           {/* 소속 학과 — 로고 옆 두 줄 */}
-          <span className="hidden flex-col justify-center text-[11px] font-medium leading-tight text-slate-500 sm:flex">
+          <span className="hidden flex-col justify-center text-[11px] font-medium leading-tight text-slate-500 lg:flex">
             {SITE.org
               .split(/ & |, /)
               .filter((line) => !/hanyang/i.test(line))
               .map((line) => (
-                <span key={line}>{line}</span>
+                // 학과명은 중간에서 줄바꿈되지 않게 한 줄 유지
+                <span key={line} className="whitespace-nowrap">
+                  {line}
+                </span>
               ))}
           </span>
         </Link>
-        <nav className="-mx-4 flex items-center gap-1 overflow-x-auto px-4 md:mx-0 md:px-0">
+        <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((n) => (
             <Link
               key={n.href}

@@ -35,7 +35,7 @@ export function PatentsBrowser() {
 
       {/* 연도 필터 — 은은한 하이라이트 패널 */}
       {years.length > 1 && (
-        <div className="mt-8 inline-flex flex-wrap gap-1.5 rounded-2xl bg-sky-50/70 p-2 ring-1 ring-sky-200/70 shadow-sm">
+        <div className="mt-8 inline-flex flex-wrap gap-1.5 rounded-2xl border border-sky-300 bg-white p-2">
           {["all", ...years].map((y) => (
             <button
               key={y}

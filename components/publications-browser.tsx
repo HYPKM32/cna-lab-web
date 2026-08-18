@@ -36,6 +36,7 @@ export function PublicationsBrowser() {
   const initial = (PUB_FILTERS.find((f) => f.key === params.get("type"))?.key ??
     "all") as FilterKey;
   const [active, setActive] = useState<FilterKey>(initial);
+  const [activeYear, setActiveYear] = useState<string | null>(null);
 
   // 전체 연도를 한 번에 렌더링 — 연도 탭은 필터가 아니라 해당 위치로 점프하는 앵커
   const pubs = useMemo(
@@ -50,10 +51,12 @@ export function PublicationsBrowser() {
     window.scrollTo({ top: 0 });
   };
 
-  const jumpTo = (y: string) =>
+  const jumpTo = (y: string) => {
+    setActiveYear(y);
     document
-      .getElementById(`year-${y}`)
+      .getElementById(`pub-year-${y}`)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <PdfViewerProvider>
@@ -71,8 +74,8 @@ export function PublicationsBrowser() {
         </p>
       </header>
 
-      {/* Filter tabs — 은은한 하이라이트 패널 */}
-      <div className="mt-8 inline-flex flex-wrap gap-2 rounded-2xl bg-sky-50/70 p-2 ring-1 ring-sky-200/70 shadow-sm">
+      {/* Filter tabs — 테두리로 살짝 강조 */}
+      <div className="mt-8 inline-flex flex-wrap gap-2 rounded-2xl border border-sky-300 bg-white p-2">
         {PUB_FILTERS.map((f) => {
           const isActive = f.key === active;
           return (
@@ -95,13 +98,18 @@ export function PublicationsBrowser() {
 
       {/* Year jump bar — 상단 고정, 누르면 해당 연도 위치로 스크롤 */}
       {years.length > 1 && (
-        <div className="sticky top-2 z-20 mt-6 flex flex-wrap gap-1.5 rounded-2xl bg-white/90 px-3 py-2.5 ring-1 ring-sky-200/70 shadow-md backdrop-blur">
+        <div className="sticky top-2 z-20 mt-6 flex flex-wrap gap-1.5 rounded-2xl border border-sky-300 bg-white/95 px-3 py-2.5 backdrop-blur">
           {years.map((y) => (
             <button
               key={y}
               type="button"
               onClick={() => jumpTo(y)}
-              className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-500 ring-1 ring-slate-200 transition hover:bg-sky-50 hover:text-sky-700"
+              className={
+                "rounded-full px-4 py-2 text-sm font-semibold transition " +
+                (activeYear === y
+                  ? "bg-sky-600 text-white"
+                  : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700")
+              }
             >
               {y}
             </button>
@@ -112,7 +120,7 @@ export function PublicationsBrowser() {
       {/* Grouped list — 전체 연도 렌더링 */}
       <div className="mt-8 space-y-12">
         {grouped.map(([year, list]) => (
-          <section key={year} id={`year-${year}`} className="scroll-mt-20">
+          <section key={year} id={`pub-year-${year}`} className="scroll-mt-28">
             <h2 className="sticky top-16 z-10 -mx-2 bg-white/90 px-2 py-2 font-serif text-3xl font-bold text-slate-900 backdrop-blur">
               {year}
             </h2>

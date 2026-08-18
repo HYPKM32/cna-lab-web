@@ -1,5 +1,6 @@
 "use client";
 // 정적 사이트용 Seminars 목록 — 연도 필터를 클라이언트 상태로 처리
+import { useState } from "react";
 import { getLectures, getAssetsByOwner, type Lecture } from "@/lib/data";
 import { PdfViewerProvider, PdfViewButton } from "@/components/pdf-viewer";
 import { PDF_ENABLED, pdfUrl } from "@/lib/asset";
@@ -24,10 +25,13 @@ const assetMap = getAssetsByOwner("lecture");
 
 export function LecturesBrowser() {
   // 전체 연도를 한 번에 렌더링 — 연도 탭은 해당 위치로 점프 (Publications 와 동일)
-  const jumpTo = (y: string) =>
+  const [activeYear, setActiveYear] = useState<string | null>(null);
+  const jumpTo = (y: string) => {
+    setActiveYear(y);
     document
-      .getElementById(`year-${y}`)
+      .getElementById(`sem-year-${y}`)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <PdfViewerProvider>
@@ -47,13 +51,18 @@ export function LecturesBrowser() {
 
       {/* Year jump bar — 상단 고정, 누르면 해당 연도 위치로 스크롤 */}
       {years.length > 1 && (
-        <div className="sticky top-2 z-20 mt-6 flex flex-wrap gap-1.5 rounded-2xl bg-white/90 px-3 py-2.5 ring-1 ring-sky-200/70 shadow-md backdrop-blur">
+        <div className="sticky top-2 z-20 mt-6 flex flex-wrap gap-1.5 rounded-2xl border border-sky-300 bg-white/95 px-3 py-2.5 backdrop-blur">
           {years.map((y) => (
             <button
               key={y}
               type="button"
               onClick={() => jumpTo(y)}
-              className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-500 ring-1 ring-slate-200 transition hover:bg-sky-50 hover:text-sky-700"
+              className={
+                "rounded-full px-4 py-2 text-sm font-semibold transition " +
+                (activeYear === y
+                  ? "bg-sky-600 text-white"
+                  : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700")
+              }
             >
               {y}
             </button>
@@ -64,7 +73,7 @@ export function LecturesBrowser() {
       {/* 연도별 타임라인 — 전체 연도 렌더링 */}
       <div className="mt-8 space-y-14">
         {grouped.map(([y, list]) => (
-          <section key={y} id={`year-${y}`} className="scroll-mt-20">
+          <section key={y} id={`sem-year-${y}`} className="scroll-mt-28">
             <h2 className="font-serif text-3xl font-bold text-slate-900">{y}</h2>
             <ol className="mt-7 space-y-10 border-l-2 border-slate-200 pl-10">
               {list.map((l) => (

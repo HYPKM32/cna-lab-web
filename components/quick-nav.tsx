@@ -21,10 +21,10 @@ export function QuickNav() {
       aria-label="Quick navigation"
       className={
         "fixed z-50 flex items-center gap-0.5 border border-sky-400/25 bg-slate-900/90 shadow-xl shadow-sky-500/10 ring-1 ring-black/40 backdrop-blur-md " +
-        // 모바일: 하단 가로 바
-        "inset-x-2 bottom-2 flex-row overflow-x-auto rounded-2xl p-1.5 " +
+        // 모바일: 화면에 딱 붙는 전폭 하단 바 (+ 아이폰 안전영역 패딩)
+        "inset-x-0 bottom-0 flex-row overflow-x-auto rounded-none border-x-0 border-b-0 border-t p-1 pb-[max(0.25rem,env(safe-area-inset-bottom))] " +
         // 데스크톱: 오른쪽 세로 리모콘
-        "md:inset-x-auto md:bottom-auto md:right-4 md:top-1/2 md:w-36 md:-translate-y-1/2 md:flex-col md:overflow-visible md:rounded-2xl md:p-2"
+        "md:inset-x-auto md:bottom-auto md:right-4 md:top-1/2 md:w-36 md:-translate-y-1/2 md:flex-col md:overflow-visible md:rounded-2xl md:border md:p-2"
       }
     >
       <button type="button" onClick={toTop} className={`hidden md:block ${itemClass}`}>

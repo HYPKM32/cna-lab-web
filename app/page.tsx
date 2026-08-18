@@ -36,7 +36,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-transparent" />
 
-        <div className="relative mx-auto max-w-6xl px-6 py-32 sm:py-44">
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-44">
           <Reveal>
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-sky-300">
               {SITE.name}
@@ -58,8 +58,9 @@ export default async function HomePage() {
       </section>
 
       {/* Stats + Highlights — 배너 위로 끌어올려 겹치되, 아래는 다크로 이어짐 */}
-      <section id="overview" className="relative z-10 -mt-24 scroll-mt-20 bg-slate-950 sm:-mt-28">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 pt-8 lg:grid-cols-[1fr_1.6fr]">
+      {/* 모바일/태블릿: 겹침 없이 이어붙임, 데스크톱(lg+)에서만 배너 위로 끌어올림 */}
+      <section id="overview" className="relative z-10 scroll-mt-20 bg-slate-950 lg:-mt-28">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 pt-10 lg:grid-cols-[1fr_1.6fr] lg:pt-8">
           {/* 통계 — 왼쪽 */}
           <Reveal>
             {/* 모바일: 한 줄씩(라벨 좌·숫자 우) / 태블릿: 3열 / 데스크톱: 세로 사이드 */}

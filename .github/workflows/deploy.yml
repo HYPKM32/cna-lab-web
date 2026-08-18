@@ -13,9 +13,11 @@ permissions:
   pages: write
   id-token: write
 
+# 배포 직렬화: 진행 중 배포를 취소하지 않고 끝날 때까지 대기
+# (중간 취소된 배포가 Pages 서버에 고아로 남아 후속 배포를 막는 문제 방지)
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:

@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RESEARCH_SECTIONS } from "@/lib/research-meta";
 
@@ -34,6 +33,7 @@ const PANEL =
 export function QuickNav() {
   const [current, setCurrent] = useState("intro");
   const [subCurrent, setSubCurrent] = useState("");
+  const [subOpen, setSubOpen] = useState(true); // 세부 리모콘 접기/펴기 (책갈피 토글)
 
   useEffect(() => {
     let raf = 0;
@@ -73,6 +73,18 @@ export function QuickNav() {
     };
   }, []);
 
+  // 원페이지("/")에서는 앵커 점프를 직접 처리 — 해시 중첩(#a#b)과 히스토리 누적 방지
+  const go = (e: React.MouseEvent, id: string | null) => {
+    if (window.location.pathname !== "/") return; // 다른 경로에선 기본 내비게이션
+    e.preventDefault();
+    if (id)
+      document
+        .getElementById(id)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+    history.replaceState(null, "", id ? `#${id}` : window.location.pathname);
+  };
+
   const toTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const toBottom = () =>
     window.scrollTo({
@@ -100,31 +112,72 @@ export function QuickNav() {
 
   return (
     <>
-      {/* ── 세부 리모콘 (별도 패널) ───────────────────────── */}
+      {/* ── 세부 리모콘 — 메인 리모콘 왼쪽 면에서 이어져 나오는 서랍 + 책갈피 토글 ── */}
       {activeChildren && (
-        <nav
-          aria-label="Section navigation"
-          className={
-            `fixed z-50 ${PANEL} ` +
-            // 모바일: 하단 메인 바 위에 떠 있는 알약 바
-            "inset-x-2 bottom-[3.4rem] flex flex-row items-center gap-0.5 overflow-x-auto rounded-xl border p-1 " +
-            // 데스크톱: 메인 리모콘 왼쪽의 세로 패널
-            "md:inset-x-auto md:bottom-auto md:right-[11.75rem] md:top-1/2 md:w-40 md:-translate-y-1/2 md:flex-col md:items-stretch md:overflow-visible md:rounded-2xl md:p-2"
-          }
-        >
-          <p className="hidden border-b border-white/10 px-2.5 pb-1.5 pt-0.5 text-[10px] font-bold uppercase tracking-widest text-slate-400 md:block">
-            {activeParent.label}
-          </p>
-          {activeChildren.map((c) => (
-            <Link
-              key={c.id}
-              href={`/#${c.id}`}
-              className={subClass(subCurrent === c.id)}
+        <>
+          {/* 데스크톱: 메인 리모콘(right-4 + w-40 = right-[11rem]) 왼쪽에 밀착 */}
+          <div className="fixed right-[11rem] top-1/2 z-40 hidden -translate-y-1/2 items-center md:flex">
+            {/* 책갈피 탭 — 항상 보이며 접기/펴기 */}
+            <button
+              type="button"
+              onClick={() => setSubOpen((v) => !v)}
+              aria-label={subOpen ? "세부 리모콘 접기" : "세부 리모콘 펴기"}
+              className="flex h-16 w-5 items-center justify-center rounded-l-lg border border-r-0 border-sky-400/30 bg-slate-900/90 text-[10px] text-sky-300 shadow-lg shadow-sky-500/10 backdrop-blur-md transition hover:bg-slate-800/90"
             >
-              {c.label}
-            </Link>
-          ))}
-        </nav>
+              {subOpen ? "❯" : "❮"}
+            </button>
+            {subOpen && (
+              <nav
+                aria-label="Section navigation"
+                // 오른쪽 모서리는 각지게 + 오른쪽 테두리 없음 → 메인 리모콘에서 이어진 느낌
+                className={`flex w-40 flex-col gap-0.5 rounded-l-2xl border border-r-0 p-2 ${PANEL}`}
+              >
+                {activeChildren.map((c) => (
+                  <a
+                    key={c.id}
+                    href={`/#${c.id}`}
+                    onClick={(e) => go(e, c.id)}
+                    className={subClass(subCurrent === c.id)}
+                  >
+                    {c.label}
+                  </a>
+                ))}
+              </nav>
+            )}
+          </div>
+
+          {/* 모바일: 하단 바 위에 이어져 나오는 서랍 바 + 책갈피 토글 */}
+          <div className="fixed inset-x-0 bottom-[3.15rem] z-40 flex items-end justify-end md:hidden">
+            {subOpen && (
+              <nav
+                aria-label="Section navigation"
+                className={`flex flex-1 flex-row items-center gap-0.5 overflow-x-auto rounded-tl-xl border border-b-0 border-r-0 p-1 ${PANEL}`}
+              >
+                {activeChildren.map((c) => (
+                  <a
+                    key={c.id}
+                    href={`/#${c.id}`}
+                    onClick={(e) => go(e, c.id)}
+                    className={subClass(subCurrent === c.id)}
+                  >
+                    {c.label}
+                  </a>
+                ))}
+              </nav>
+            )}
+            <button
+              type="button"
+              onClick={() => setSubOpen((v) => !v)}
+              aria-label={subOpen ? "세부 리모콘 접기" : "세부 리모콘 펴기"}
+              className={
+                "flex h-7 w-10 shrink-0 items-center justify-center border border-b-0 border-sky-400/30 bg-slate-900/90 text-[10px] text-sky-300 backdrop-blur-md " +
+                (subOpen ? "self-stretch rounded-tr-xl border-l-0" : "rounded-t-lg mr-2")
+              }
+            >
+              {subOpen ? "▾" : "▴"}
+            </button>
+          </div>
+        </>
       )}
 
       {/* ── 메인 리모콘 ──────────────────────────────────── */}
@@ -149,9 +202,14 @@ export function QuickNav() {
         <div className="my-1 hidden h-px w-full bg-white/10 md:block" />
 
         {ITEMS.map((it) => (
-          <Link key={it.id} href={it.href} className={itemClass(current === it.id)}>
+          <a
+            key={it.id}
+            href={it.href}
+            onClick={(e) => go(e, it.id === "intro" ? null : it.id)}
+            className={itemClass(current === it.id)}
+          >
             {it.label}
-          </Link>
+          </a>
         ))}
 
         <div className="my-1 hidden h-px w-full bg-white/10 md:block" />

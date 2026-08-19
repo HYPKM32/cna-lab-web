@@ -44,39 +44,39 @@ export function PatentsBrowser() {
       {/* 필터 패널 — 연도 + 국가 (Publications 패널과 톤 통일) */}
       {allPatents.length > 0 && (
         <div className="mt-8 space-y-1.5 rounded-2xl border border-sky-300 bg-white/95 p-1.5 sm:space-y-2.5 sm:p-2.5">
-          {/* 연도 줄 */}
+          {/* 국가 줄 (분류 성격 — Publications 의 종류 줄과 같은 위치/톤) */}
           <div className="flex flex-nowrap gap-1.5 overflow-x-auto sm:flex-wrap sm:overflow-visible">
-            {["all", ...years].map((y) => (
-              <button
-                key={y}
-                type="button"
-                onClick={() => setYear(y)}
-                className={
-                  "whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold transition sm:px-4 sm:py-2 sm:text-sm " +
-                  (year === y
-                    ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200")
-                }
-              >
-                {y === "all" ? "All years" : y}
-              </button>
-            ))}
-          </div>
-          {/* 국가 줄 */}
-          <div className="flex flex-nowrap gap-1.5 overflow-x-auto border-t border-slate-100 pt-1.5 sm:flex-wrap sm:overflow-visible sm:pt-2.5">
             {["all", ...countries].map((c) => (
               <button
                 key={c}
                 type="button"
                 onClick={() => setCountry(c)}
                 className={
-                  "whitespace-nowrap rounded-full px-2.5 py-1 font-mono text-xs font-semibold transition sm:px-3.5 sm:py-1.5 sm:text-sm " +
+                  "whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold transition sm:px-4 sm:py-2 sm:text-sm " +
                   (country === c
+                    ? "bg-slate-900 text-white"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200")
+                }
+              >
+                {c === "all" ? "All countries" : c}
+              </button>
+            ))}
+          </div>
+          {/* 연도 줄 */}
+          <div className="flex flex-nowrap gap-1.5 overflow-x-auto border-t border-slate-100 pt-1.5 sm:flex-wrap sm:overflow-visible sm:pt-2.5">
+            {["all", ...years].map((y) => (
+              <button
+                key={y}
+                type="button"
+                onClick={() => setYear(y)}
+                className={
+                  "whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold transition sm:px-3.5 sm:py-1.5 sm:text-sm " +
+                  (year === y
                     ? "bg-sky-600 text-white"
                     : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700")
                 }
               >
-                {c === "all" ? "All countries" : c}
+                {y === "all" ? "All years" : y}
               </button>
             ))}
           </div>

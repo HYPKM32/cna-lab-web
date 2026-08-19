@@ -1,4 +1,4 @@
-:HL["/_next/static/chunks/2g32x2hgzn6i7.css","style"]
+:HL["/_next/static/chunks/1kxnmeck80179.css","style"]
 :HL["/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/cna-logo.png","image"]
 :HL["/hyu-logo.png","image"]
@@ -80,4 +80,4 @@
 :HL["/uploads/file/sub3_4/3530937112_lYCPJkK7_2a0dcec3eeb8816b276473c2cbaa7a36423fe999.jpg","image"]
 :HL["/uploads/file/sub3_4/3530937112_1VCrKRS3_73dff56450dee162928ec5bd82063f1c9c16c1d5.JPG","image"]
 :HL["/uploads/file/sub3_4/3530937112_wHvd7ZVm_6c880927066870fd60035781bbd109b83fba43bb.jpg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"people","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"PCgyE4UKzNR4VytOeaAf8"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"people","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"7dvyYn6UYNUOuLBrHqGZ-"}

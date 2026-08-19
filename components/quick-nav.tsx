@@ -33,7 +33,6 @@ const PANEL =
 export function QuickNav() {
   const [current, setCurrent] = useState("intro");
   const [subCurrent, setSubCurrent] = useState("");
-  const [subOpen, setSubOpen] = useState(true); // 세부 리모콘 접기/펴기 (책갈피 토글)
 
   useEffect(() => {
     let raf = 0;
@@ -112,71 +111,43 @@ export function QuickNav() {
 
   return (
     <>
-      {/* ── 세부 리모콘 — 메인 리모콘 왼쪽 면에서 이어져 나오는 서랍 + 책갈피 토글 ── */}
+      {/* ── 세부 리모콘 — 메인 리모콘 왼쪽 면에서 이어져 나오는 서랍 ── */}
       {activeChildren && (
         <>
           {/* 데스크톱: 메인 리모콘(right-4 + w-40 = right-[11rem]) 왼쪽에 밀착 */}
-          <div className="fixed right-[11rem] top-1/2 z-40 hidden -translate-y-1/2 items-center md:flex">
-            {/* 책갈피 탭 — 항상 보이며 접기/펴기 */}
-            <button
-              type="button"
-              onClick={() => setSubOpen((v) => !v)}
-              aria-label={subOpen ? "세부 리모콘 접기" : "세부 리모콘 펴기"}
-              className="flex h-16 w-5 items-center justify-center rounded-l-lg border border-r-0 border-sky-400/30 bg-slate-900/90 text-[10px] text-sky-300 shadow-lg shadow-sky-500/10 backdrop-blur-md transition hover:bg-slate-800/90"
-            >
-              {subOpen ? "❯" : "❮"}
-            </button>
-            {subOpen && (
-              <nav
-                aria-label="Section navigation"
-                // 오른쪽 모서리는 각지게 + 오른쪽 테두리 없음 → 메인 리모콘에서 이어진 느낌
-                className={`flex w-40 flex-col gap-0.5 rounded-l-2xl border border-r-0 p-2 ${PANEL}`}
+          <nav
+            aria-label="Section navigation"
+            // 오른쪽 모서리는 각지게 + 오른쪽 테두리 없음 → 메인 리모콘에서 이어진 느낌
+            className={`fixed right-[11rem] top-1/2 z-40 hidden w-40 -translate-y-1/2 flex-col gap-0.5 rounded-l-2xl border border-r-0 p-2 md:flex ${PANEL}`}
+          >
+            {activeChildren.map((c) => (
+              <a
+                key={c.id}
+                href={`/#${c.id}`}
+                onClick={(e) => go(e, c.id)}
+                className={subClass(subCurrent === c.id)}
               >
-                {activeChildren.map((c) => (
-                  <a
-                    key={c.id}
-                    href={`/#${c.id}`}
-                    onClick={(e) => go(e, c.id)}
-                    className={subClass(subCurrent === c.id)}
-                  >
-                    {c.label}
-                  </a>
-                ))}
-              </nav>
-            )}
-          </div>
+                {c.label}
+              </a>
+            ))}
+          </nav>
 
-          {/* 모바일: 하단 바 위에 이어져 나오는 서랍 바 + 책갈피 토글 */}
-          <div className="fixed inset-x-0 bottom-[3.15rem] z-40 flex items-end justify-end md:hidden">
-            {subOpen && (
-              <nav
-                aria-label="Section navigation"
-                className={`flex flex-1 flex-row items-center gap-0.5 overflow-x-auto rounded-tl-xl border border-b-0 border-r-0 p-1 ${PANEL}`}
+          {/* 모바일: 하단 바 위에 이어져 나오는 서랍 바 */}
+          <nav
+            aria-label="Section navigation"
+            className={`fixed inset-x-0 bottom-[3.15rem] z-40 flex flex-row items-center gap-0.5 overflow-x-auto rounded-none border border-x-0 border-b-0 p-1 md:hidden ${PANEL}`}
+          >
+            {activeChildren.map((c) => (
+              <a
+                key={c.id}
+                href={`/#${c.id}`}
+                onClick={(e) => go(e, c.id)}
+                className={subClass(subCurrent === c.id)}
               >
-                {activeChildren.map((c) => (
-                  <a
-                    key={c.id}
-                    href={`/#${c.id}`}
-                    onClick={(e) => go(e, c.id)}
-                    className={subClass(subCurrent === c.id)}
-                  >
-                    {c.label}
-                  </a>
-                ))}
-              </nav>
-            )}
-            <button
-              type="button"
-              onClick={() => setSubOpen((v) => !v)}
-              aria-label={subOpen ? "세부 리모콘 접기" : "세부 리모콘 펴기"}
-              className={
-                "flex h-7 w-10 shrink-0 items-center justify-center border border-b-0 border-sky-400/30 bg-slate-900/90 text-[10px] text-sky-300 backdrop-blur-md " +
-                (subOpen ? "self-stretch rounded-tr-xl border-l-0" : "rounded-t-lg mr-2")
-              }
-            >
-              {subOpen ? "▾" : "▴"}
-            </button>
-          </div>
+                {c.label}
+              </a>
+            ))}
+          </nav>
         </>
       )}
 

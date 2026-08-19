@@ -13,16 +13,23 @@ import { PdfViewerProvider, PdfViewButton } from "@/components/pdf-viewer";
 import { PDF_ENABLED, pdfUrl } from "@/lib/asset";
 import { PUB_FILTERS, PUB_TYPE_LABEL, SITE } from "@/lib/labels";
 
-type FilterKey = PubType | "highlight" | "in_press" | "all";
+type FilterKey = PubType | "highlight" | "all";
 
 function groupByYear(pubs: Publication[]) {
   const map = new Map<string, Publication[]>();
   for (const p of pubs) {
-    const key = p.year ? String(p.year) : "In-progress";
+    // In-press(게재 확정)는 연도 대신 별도 그룹으로 — 최신 연도보다 앞(맨 위)
+    const key = p.in_press
+      ? "In-press"
+      : p.year
+        ? String(p.year)
+        : "In-progress";
     (map.get(key) ?? map.set(key, []).get(key)!).push(p);
   }
-  // 연도 내림차순, "In-progress"(연도 미정)는 맨 뒤
+  // "In-press" 맨 앞 → 연도 내림차순 → "In-progress"(연도 미정) 맨 뒤
   return [...map.entries()].sort((a, b) => {
+    if (a[0] === "In-press") return -1;
+    if (b[0] === "In-press") return 1;
     if (a[0] === "In-progress") return 1;
     if (b[0] === "In-progress") return -1;
     return Number(b[0]) - Number(a[0]);

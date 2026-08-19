@@ -23,16 +23,7 @@ const ITEMS: {
   { id: "intro", href: "/", label: "Introduction", children: INTRO_CHILDREN },
   { id: "publications", href: "/#publications", label: "Publications" },
   { id: "patents", href: "/#patents", label: "Patents" },
-  {
-    id: "people",
-    href: "/#people",
-    label: "People",
-    children: [
-      { id: "people-professor", label: "Professor" },
-      { id: "people-current", label: "Current Members" },
-      { id: "people-alumni", label: "Alumni" },
-    ],
-  },
+  { id: "people", href: "/#people", label: "People" },
   { id: "seminars", href: "/#seminars", label: "Seminars" },
 ];
 

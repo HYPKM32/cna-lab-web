@@ -144,7 +144,8 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-6 py-3">
           <div className="h-px bg-gradient-to-r from-transparent via-sky-400/70 to-transparent" />
         </div>
-        <div className="mx-auto max-w-[90rem] px-6 pb-24 pt-6">
+        {/* md+: 오른쪽 리모콘(+세부 리모콘)에 가리지 않도록 오른쪽 여백 확보 → 내용이 왼쪽으로 */}
+        <div className="mx-auto max-w-[90rem] px-6 pb-24 pt-6 md:pr-44 xl:pr-[23rem]">
           <Reveal>
             <p className="text-base font-bold uppercase tracking-[0.3em] text-sky-400">
               Research
@@ -194,8 +195,8 @@ export default async function HomePage() {
                                   {" "}/ {String(sec.figures.length).padStart(2, "0")}
                                 </span>
                               </span>
-                              <span className="h-3.5 w-px shrink-0 bg-white/15" />
-                              <span className="truncate text-sm font-semibold text-slate-200">
+                              <span className="h-4 w-px shrink-0 bg-white/15" />
+                              <span className="truncate text-base font-semibold text-slate-100 md:text-lg">
                                 {f.label}
                               </span>
                             </figcaption>

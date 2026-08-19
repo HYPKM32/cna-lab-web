@@ -64,10 +64,11 @@ export default async function HomePage() {
           {/* 통계 — 왼쪽 */}
           <Reveal className="min-w-0">
             {/* 모바일: 한 줄씩(라벨 좌·숫자 우) / 태블릿: 3열 / 데스크톱: 세로 사이드 */}
-            <dl className="grid h-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-1">
+            <dl className="grid h-full grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-1">
               {[
                 { label: "Publications", value: stats.publications },
-                { label: "Members & Alumni", value: stats.people },
+                { label: "Current Members", value: stats.currentMembers },
+                { label: "Alumni", value: stats.alumni },
                 { label: "Seminars", value: stats.lectures },
               ].map((s) => (
                 <div

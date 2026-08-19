@@ -17,7 +17,7 @@ export const NAV = [
 ];
 
 export const PUB_TYPE_LABEL: Record<PubType, string> = {
-  journal: "International Journal",
+  journal: "SCI(E) Journal",
   conference: "Conference",
   domestic_journal: "Domestic Journal",
   domestic_conf: "Domestic Conference",
@@ -28,7 +28,7 @@ export const PUB_TYPE_LABEL: Record<PubType, string> = {
 export const PUB_FILTERS: { key: PubType | "highlight" | "all"; label: string }[] = [
   { key: "all", label: "All" },
   { key: "highlight", label: "Highlights" },
-  { key: "journal", label: "International Journal" },
+  { key: "journal", label: "SCI(E) Journal" },
   { key: "conference", label: "Conference" },
   { key: "domestic_journal", label: "Domestic Journal" },
   { key: "domestic_conf", label: "Domestic Conference" },

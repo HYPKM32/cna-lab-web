@@ -62,6 +62,7 @@ export interface Patent {
   number: string | null; // 등록번호
   country: string | null; // 'KR' | 'US' | ...
   filing_date: string | null; // 등록/출원일 표기용 문자열
+  certificate?: string | null; // 특허증 사진 (/uploads/cms/…) — CMS 업로드
 }
 
 export interface Asset {
@@ -125,9 +126,14 @@ export function getAssetsByOwner(ownerType: Asset["owner_type"]) {
 }
 
 export function getStats() {
+  // 현재 인원(재학·학부 포함)과 졸업생(alumni_*)을 구분해 카운트
+  const current = people.filter(
+    (p) => p.category === "current" || p.category === "undergraduate",
+  ).length;
   return {
     publications: publications.length,
-    people: people.length,
+    currentMembers: current,
+    alumni: people.length - current,
     lectures: lectures.length,
   };
 }

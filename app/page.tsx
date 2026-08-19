@@ -59,26 +59,28 @@ export default async function HomePage() {
       {/* Stats + Highlights — 배너 위로 끌어올려 겹치되, 아래는 다크로 이어짐 */}
       {/* 모바일/태블릿: 겹침 없이 이어붙임, 데스크톱(lg+)에서만 배너 위로 끌어올림 */}
       <section id="overview" className="relative z-10 scroll-mt-20 bg-slate-950 lg:-mt-28">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-14 pt-10 lg:grid-cols-[1fr_1.6fr] lg:pt-8">
-          {/* 통계 — 왼쪽 */}
+        <div className="mx-auto max-w-7xl px-6 pb-14 pt-10 lg:pt-8">
+          {/* 통계 — 헤어라인으로 나뉜 가로 밴드 (숫자 위·라벨 아래) */}
           <Reveal className="min-w-0">
-            {/* 모바일: 한 줄씩(라벨 좌·숫자 우) / 태블릿: 3열 / 데스크톱: 세로 사이드 */}
-            <dl className="grid h-full grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-1">
+            <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/15 backdrop-blur-md md:grid-cols-5">
               {[
                 { label: "Publications", value: stats.publications },
                 { label: "Patents", value: stats.patents },
                 { label: "Current Members", value: stats.currentMembers },
                 { label: "Alumni", value: stats.alumni },
                 { label: "Seminars", value: stats.lectures },
-              ].map((s) => (
+              ].map((s, i) => (
                 <div
                   key={s.label}
-                  className="flex flex-row items-center justify-between gap-1 rounded-2xl bg-slate-900/70 px-5 py-3 ring-1 ring-white/15 backdrop-blur-md transition hover:bg-slate-900/80 sm:flex-col sm:justify-center sm:px-4 sm:py-4 lg:flex-row lg:justify-between lg:px-6"
+                  className={
+                    "flex flex-col-reverse items-center justify-center gap-1 bg-slate-900/80 px-3 py-5 transition hover:bg-slate-900/60 " +
+                    (i === 4 ? "col-span-2 md:col-span-1" : "")
+                  }
                 >
-                  <dt className="text-xs font-medium uppercase tracking-wide text-slate-400 lg:text-sm">
+                  <dt className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
                     {s.label}
                   </dt>
-                  <dd className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                  <dd className="text-3xl font-bold tracking-tight text-white">
                     <CountUp to={s.value} />
                   </dd>
                 </div>
@@ -86,10 +88,10 @@ export default async function HomePage() {
             </dl>
           </Reveal>
 
-          {/* 하이라이트 — 오른쪽, 항목당 한 줄 */}
+          {/* 하이라이트 — 통계 밴드 아래 전폭 카드 */}
           {highlights.length > 0 && (
-            <Reveal delay={0.1} className="min-w-0">
-              <div className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-slate-900/70 p-6 ring-1 ring-sky-400/20 backdrop-blur-md">
+            <Reveal delay={0.1} className="mt-6 block min-w-0">
+              <div className="relative flex flex-col overflow-hidden rounded-2xl bg-slate-900/70 p-6 ring-1 ring-sky-400/20 backdrop-blur-md">
                 {/* 상단 얇은 하늘색 액센트 라인 */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-sky-400/60 to-transparent" />
                 <div className="relative mb-4 flex items-baseline justify-between">

@@ -67,6 +67,7 @@ export default async function HomePage() {
             <dl className="grid h-full grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-1">
               {[
                 { label: "Publications", value: stats.publications },
+                { label: "Patents", value: stats.patents },
                 { label: "Current Members", value: stats.currentMembers },
                 { label: "Alumni", value: stats.alumni },
                 { label: "Seminars", value: stats.lectures },

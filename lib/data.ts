@@ -132,6 +132,7 @@ export function getStats() {
   ).length;
   return {
     publications: publications.length,
+    patents: patents.length,
     currentMembers: current,
     alumni: people.length - current,
     lectures: lectures.length,

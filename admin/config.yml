@@ -44,6 +44,7 @@ collections:
       - { label: 저자, name: authors, widget: text, required: false }
       - { label: "원문 링크 (DOI 등)", name: link_url, widget: string, required: false }
       - { label: "홈 화면 하이라이트", name: is_highlight, widget: boolean, default: false }
+      - { label: "In-press (게재 확정·인쇄 중)", name: in_press, widget: boolean, default: false, required: false }
 
   # ── 특허 ─────────────────────────────────────────────
   - name: patents

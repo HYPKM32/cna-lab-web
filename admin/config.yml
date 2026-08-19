@@ -32,7 +32,7 @@ collections:
         default: journal
         options:
           - { label: "SCI(E) Journal", value: journal }
-          - { label: "Conference", value: conference }
+          - { label: "International Conference", value: conference }
           - { label: "Domestic Journal", value: domestic_journal }
           - { label: "Domestic Conference", value: domestic_conf }
           - { label: "Lecture", value: lecture }

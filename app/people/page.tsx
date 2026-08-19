@@ -137,14 +137,14 @@ export default function PeoplePage() {
 
       {/* 교수 피처드 */}
       {professor && (
-        <section className="mt-12">
+        <section id="people-professor" className="mt-12 scroll-mt-20">
           <ProfessorCard p={professor} />
         </section>
       )}
 
       {/* 현재 멤버 */}
       {members.length > 0 && (
-        <section className="mt-16">
+        <section id="people-current" className="mt-16 scroll-mt-20">
           <h2 className="font-serif text-2xl font-bold text-slate-900">
             Current Members
           </h2>
@@ -172,7 +172,7 @@ export default function PeoplePage() {
 
       {/* 알럼나이 — 조밀하게 */}
       {alumniGroups.length > 0 && (
-        <section className="mt-20">
+        <section id="people-alumni" className="mt-20 scroll-mt-20">
           <h2 className="font-serif text-2xl font-bold text-slate-900">Alumni</h2>
           <div className="mt-6 space-y-10">
             {alumniGroups.map((g) => (

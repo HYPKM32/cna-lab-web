@@ -14,11 +14,9 @@ import { UnderlineDraw } from "@/components/underline-draw";
 
 export default async function HomePage() {
   const stats = getStats();
-  const allHighlights = getPublications("highlight");
+  // 하이라이트는 CMS 에서 체크된 것 중 최신순 (정렬은 data 레이어에서 연도↓)
+  const highlights = getPublications("highlight");
   const research = await getResearchSections();
-  // 하이라이트는 항상 최신 연도 것만 노출
-  const latestYear = Math.max(...allHighlights.map((p) => p.year ?? 0));
-  const highlights = allHighlights.filter((p) => p.year === latestYear);
 
   return (
     <>
@@ -184,10 +182,23 @@ export default async function HomePage() {
                 {/* 자료 — 슬라이드 대신 전부 세로로 나열 (한 스크롤에 전체 노출) */}
                 <div>
                   {sec.figures.length > 0 ? (
-                    <div className="space-y-6">
-                      {sec.figures.map((f) => (
+                    <div className="space-y-7">
+                      {sec.figures.map((f, j) => (
                         <Reveal key={f.src}>
-                          <figure className="overflow-hidden rounded-2xl bg-slate-950/50 ring-1 ring-white/10">
+                          {/* 정갈한 프레임: 순번·제목 캡션 바 + 이미지 */}
+                          <figure className="overflow-hidden rounded-2xl bg-slate-950/60 ring-1 ring-white/10 transition hover:ring-sky-400/40">
+                            <figcaption className="flex items-center gap-3 border-b border-white/5 bg-white/[0.03] px-5 py-3">
+                              <span className="shrink-0 font-mono text-[11px] font-semibold tracking-widest text-sky-400">
+                                {String(j + 1).padStart(2, "0")}
+                                <span className="text-slate-500">
+                                  {" "}/ {String(sec.figures.length).padStart(2, "0")}
+                                </span>
+                              </span>
+                              <span className="h-3.5 w-px shrink-0 bg-white/15" />
+                              <span className="truncate text-sm font-semibold text-slate-200">
+                                {f.label}
+                              </span>
+                            </figcaption>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={f.src}

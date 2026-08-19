@@ -3,20 +3,11 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { asset } from "./asset";
+import { RESEARCH_SECTIONS as SECTIONS } from "./research-meta";
 
 const FIGURE_DIR =
   process.env.FIGURE_DIR ?? path.join(process.cwd(), "public/uploads/figure");
 const IMAGE_EXT = /\.(png|jpe?g|webp|gif|avif)$/i;
-
-// 홈에 노출할 섹션과 순서 (폴더명 ↔ 표시 제목)
-const SECTIONS = [
-  { folder: "Brain_Disorder_and_Samd", title: "Brain Disorder and SaMD" },
-  { folder: "NeuroImages", title: "NeuroImages" },
-  {
-    folder: "The_Integration_of_Neuroimaging_and_AI",
-    title: "The Integration of Neuroimaging and AI",
-  },
-];
 
 export interface Figure {
   src: string; // /uploads/figure/... (nginx 가 서빙)

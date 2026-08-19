@@ -1,13 +1,29 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { RESEARCH_SECTIONS } from "@/lib/research-meta";
 
 // 퀵 내비게이션(리모콘)
 // - 데스크톱(md+): 화면 오른쪽 중앙에 세로 배치 + 최상단/최하단 버튼
 // - 모바일: 화면 하단 고정 가로 바 (섹션 링크만)
 // - 스크롤 위치에 따라 현재 보고 있는 섹션을 하이라이트
-const ITEMS = [
-  { id: "intro", href: "/", label: "Introduction" },
+// - 하위(세부) 리모콘: 현재 섹션에 children 이 있으면 자동으로 펼쳐져
+//   섹션 내부 위치(예: Introduction 의 연구 파트)로 점프 가능
+const INTRO_CHILDREN = [
+  { id: "overview", label: "Overview" },
+  ...RESEARCH_SECTIONS.map((s, i) => ({
+    id: `research-${i + 1}`,
+    label: `${String(i + 1).padStart(2, "0")} ${s.short}`,
+  })),
+];
+
+const ITEMS: {
+  id: string;
+  href: string;
+  label: string;
+  children?: { id: string; label: string }[];
+}[] = [
+  { id: "intro", href: "/", label: "Introduction", children: INTRO_CHILDREN },
   { id: "publications", href: "/#publications", label: "Publications" },
   { id: "patents", href: "/#patents", label: "Patents" },
   { id: "people", href: "/#people", label: "People" },
@@ -16,6 +32,7 @@ const ITEMS = [
 
 export function QuickNav() {
   const [current, setCurrent] = useState("intro");
+  const [subCurrent, setSubCurrent] = useState("");
 
   useEffect(() => {
     let raf = 0;
@@ -29,7 +46,18 @@ export function QuickNav() {
         if (!el) continue;
         if (el.getBoundingClientRect().top + window.scrollY <= probe) cur = id;
       }
+      // 현재 섹션에 세부 항목이 있으면 그 안에서의 위치도 판정
+      let sub = "";
+      const children = ITEMS.find((it) => it.id === cur)?.children;
+      if (children) {
+        for (const { id } of children) {
+          const el = document.getElementById(id);
+          if (!el) continue;
+          if (el.getBoundingClientRect().top + window.scrollY <= probe) sub = id;
+        }
+      }
       setCurrent(cur);
+      setSubCurrent(sub);
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -58,34 +86,86 @@ export function QuickNav() {
       ? "bg-sky-400/20 text-sky-300"
       : "text-slate-100 hover:bg-sky-400/15 hover:text-sky-300");
 
+  const subClass = (active: boolean) =>
+    "whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[10px] font-medium transition " +
+    "md:w-full md:px-3 md:text-left md:text-xs " +
+    (active
+      ? "bg-sky-400/20 text-sky-300"
+      : "text-slate-300 hover:bg-sky-400/15 hover:text-sky-300");
+
+  // 현재 섹션의 세부 리모콘 (있을 때만)
+  const activeChildren = ITEMS.find((it) => it.id === current)?.children;
+
   return (
     <nav
       aria-label="Quick navigation"
       className={
-        "fixed z-50 flex items-center gap-0.5 border border-sky-400/25 bg-slate-900/90 shadow-xl shadow-sky-500/10 ring-1 ring-black/40 backdrop-blur-md " +
+        "fixed z-50 border border-sky-400/25 bg-slate-900/90 shadow-xl shadow-sky-500/10 ring-1 ring-black/40 backdrop-blur-md " +
         // 모바일: 화면에 딱 붙는 전폭 하단 바 (+ 아이폰 안전영역 패딩)
-        "inset-x-0 bottom-0 flex-row overflow-x-auto rounded-none border-x-0 border-b-0 border-t p-1 pb-[max(0.25rem,env(safe-area-inset-bottom))] " +
+        "inset-x-0 bottom-0 flex flex-col rounded-none border-x-0 border-b-0 border-t p-1 pb-[max(0.25rem,env(safe-area-inset-bottom))] " +
         // 데스크톱: 오른쪽 세로 리모콘
-        "md:inset-x-auto md:bottom-auto md:right-4 md:top-1/2 md:w-36 md:-translate-y-1/2 md:flex-col md:overflow-visible md:rounded-2xl md:border md:p-2"
+        "md:inset-x-auto md:bottom-auto md:right-4 md:top-1/2 md:w-40 md:-translate-y-1/2 md:items-center md:gap-0.5 md:rounded-2xl md:border md:p-2"
       }
     >
-      <button type="button" onClick={toTop} className={`hidden md:block ${itemClass(false)}`}>
-        ↑ Top
-      </button>
+      {/* 모바일 세부 리모콘 — 메인 바 위에 한 줄 추가 */}
+      {activeChildren && (
+        <div className="mb-1 flex gap-0.5 overflow-x-auto border-b border-white/10 pb-1 md:hidden">
+          {activeChildren.map((c) => (
+            <Link
+              key={c.id}
+              href={`/#${c.id}`}
+              className={subClass(subCurrent === c.id)}
+            >
+              {c.label}
+            </Link>
+          ))}
+        </div>
+      )}
 
-      <div className="my-1 hidden h-px w-full bg-white/10 md:block" />
+      {/* 메인 리모콘 */}
+      <div className="flex items-center gap-0.5 overflow-x-auto md:w-full md:flex-col md:overflow-visible">
+        <button
+          type="button"
+          onClick={toTop}
+          className={`hidden md:block ${itemClass(false)}`}
+        >
+          ↑ Top
+        </button>
 
-      {ITEMS.map((it) => (
-        <Link key={it.id} href={it.href} className={itemClass(current === it.id)}>
-          {it.label}
-        </Link>
-      ))}
+        <div className="my-1 hidden h-px w-full bg-white/10 md:block" />
 
-      <div className="my-1 hidden h-px w-full bg-white/10 md:block" />
+        {ITEMS.map((it) => (
+          <Fragment key={it.id}>
+            <Link href={it.href} className={itemClass(current === it.id)}>
+              {it.label}
+            </Link>
+            {/* 데스크톱 세부 리모콘 — 현재 섹션 바로 아래에 들여쓰기로 펼침 */}
+            {it.children && current === it.id && (
+              <div className="ml-3 hidden w-[calc(100%-0.75rem)] flex-col gap-0.5 border-l border-white/15 pl-2 md:flex">
+                {it.children.map((c) => (
+                  <Link
+                    key={c.id}
+                    href={`/#${c.id}`}
+                    className={subClass(subCurrent === c.id)}
+                  >
+                    {c.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Fragment>
+        ))}
 
-      <button type="button" onClick={toBottom} className={`hidden md:block ${itemClass(false)}`}>
-        ↓ Bottom
-      </button>
+        <div className="my-1 hidden h-px w-full bg-white/10 md:block" />
+
+        <button
+          type="button"
+          onClick={toBottom}
+          className={`hidden md:block ${itemClass(false)}`}
+        >
+          ↓ Bottom
+        </button>
+      </div>
     </nav>
   );
 }

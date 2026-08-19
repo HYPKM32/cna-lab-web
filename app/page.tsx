@@ -11,7 +11,6 @@ import { SITE } from "@/lib/labels";
 import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
 import { UnderlineDraw } from "@/components/underline-draw";
-import { FigureCarousel } from "@/components/figure-carousel";
 
 export default async function HomePage() {
   const stats = getStats();
@@ -180,12 +179,24 @@ export default async function HomePage() {
                   </div>
                 </div>
 
-                {/* 자료 — 파트당 뷰어 하나, 화살표로 전후 넘김 */}
+                {/* 자료 — 슬라이드 대신 전부 세로로 나열 (한 스크롤에 전체 노출) */}
                 <div>
                   {sec.figures.length > 0 ? (
-                    <Reveal>
-                      <FigureCarousel figures={sec.figures} />
-                    </Reveal>
+                    <div className="space-y-6">
+                      {sec.figures.map((f) => (
+                        <Reveal key={f.src}>
+                          <figure className="overflow-hidden rounded-2xl bg-slate-950/50 ring-1 ring-white/10">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={f.src}
+                              alt={f.label}
+                              loading="lazy"
+                              className="w-full"
+                            />
+                          </figure>
+                        </Reveal>
+                      ))}
+                    </div>
                   ) : (
                     <Reveal>
                       <p className="rounded-2xl border border-dashed border-white/15 p-10 text-base text-slate-500">

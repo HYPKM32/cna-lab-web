@@ -144,8 +144,8 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-6 py-3">
           <div className="h-px bg-gradient-to-r from-transparent via-sky-400/70 to-transparent" />
         </div>
-        {/* md+: 오른쪽 리모콘(+세부 리모콘)에 가리지 않도록 오른쪽 여백 확보 → 내용이 왼쪽으로 */}
-        <div className="mx-auto max-w-[90rem] px-6 pb-24 pt-6 md:pr-44 xl:pr-[23rem]">
+        {/* md+: 메인 리모콘(right-4 + w-40 = 11rem)에 딱 안 가릴 만큼만 오른쪽 여백 */}
+        <div className="mx-auto max-w-[90rem] px-6 pb-24 pt-6 md:pr-44">
           <Reveal>
             <p className="text-base font-bold uppercase tracking-[0.3em] text-sky-400">
               Research

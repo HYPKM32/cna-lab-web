@@ -25,6 +25,7 @@ export interface Publication {
   authors: string | null;
   link_url: string | null;
   is_highlight: boolean;
+  in_press?: boolean; // 게재 확정·인쇄 중 (CMS 체크)
 }
 
 export type PersonCategory =
@@ -98,8 +99,9 @@ const patents: Patent[] = (patentsJson as Patent[])
 const assets: Asset[] = (assetsJson as Asset[]).slice().sort((a, b) => a.id - b.id);
 
 // --- 도메인 헬퍼 (기존 시그니처 유지 — await 해도 무방) ---
-export function getPublications(type?: PubType | "highlight") {
+export function getPublications(type?: PubType | "highlight" | "in_press") {
   if (type === "highlight") return publications.filter((p) => p.is_highlight);
+  if (type === "in_press") return publications.filter((p) => p.in_press);
   if (type) return publications.filter((p) => p.type === type);
   return publications;
 }

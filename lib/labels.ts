@@ -25,9 +25,13 @@ export const PUB_TYPE_LABEL: Record<PubType, string> = {
 };
 
 // Publications 필터 탭 (순서 지정)
-export const PUB_FILTERS: { key: PubType | "highlight" | "all"; label: string }[] = [
+export const PUB_FILTERS: {
+  key: PubType | "highlight" | "in_press" | "all";
+  label: string;
+}[] = [
   { key: "all", label: "All" },
   { key: "highlight", label: "Highlights" },
+  { key: "in_press", label: "In-press" },
   { key: "journal", label: "SCI(E) Journal" },
   { key: "conference", label: "International Conference" },
   { key: "domestic_journal", label: "Domestic Journal" },

@@ -13,7 +13,7 @@ import { PdfViewerProvider, PdfViewButton } from "@/components/pdf-viewer";
 import { PDF_ENABLED, pdfUrl } from "@/lib/asset";
 import { PUB_FILTERS, PUB_TYPE_LABEL, SITE } from "@/lib/labels";
 
-type FilterKey = PubType | "highlight" | "all";
+type FilterKey = PubType | "highlight" | "in_press" | "all";
 
 function groupByYear(pubs: Publication[]) {
   const map = new Map<string, Publication[]>();
@@ -155,6 +155,11 @@ export function PublicationsBrowser() {
                         {p.is_highlight && (
                           <span className="rounded-md bg-amber-100 px-2.5 py-1 text-sm font-semibold text-amber-700">
                             ★ Highlight
+                          </span>
+                        )}
+                        {p.in_press && (
+                          <span className="rounded-md bg-emerald-100 px-2.5 py-1 text-sm font-semibold text-emerald-700">
+                            In press
                           </span>
                         )}
                       </div>

@@ -1,9 +1,10 @@
 {
- "id": 1,
- "year": 2025,
- "title": "예시 특허입니다 — /admin 에서 이 항목을 지우고 실제 특허를 등록하세요",
- "inventors": "홍길동, 김아무개",
- "number": "10-2025-0000000",
- "country": "KR",
- "filing_date": "2025.01.01"
+  "id": 1,
+  "year": 2022,
+  "title": "인간 뇌 기능적 네트워크 기반 희소 계층적 그래프 신경망 모델링에 대한 발명",
+  "inventors": "이종민, 권혁",
+  "number": "10-2022-0093846",
+  "country": "KR",
+  "filing_date": "2024.12.09",
+  "certificate": ""
 }

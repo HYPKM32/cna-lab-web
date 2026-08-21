@@ -1,12 +1,13 @@
 {
- "id": 928,
- "type": "journal",
- "year": null,
- "pages": null,
- "title": "Vestibular-Visual Reweighting in Persistent Postural-Perceptual Dizziness: A Multilevel Resting-State fMRI Study",
- "venue": "Neural Plasticity",
- "volume": null,
- "authors": "Jin-Ju Kang, Yongseon Yoo, Sang-Yeon Kim, Sohui Kim, Jong-Min Lee*, Sun-Young Oh",
- "link_url": null,
- "is_highlight": 0
+  "id": 928,
+  "type": "journal",
+  "year": 2026,
+  "title": "Vestibular-Visual Reweighting in Persistent Postural-Perceptual Dizziness: A Multilevel Resting-State fMRI Study",
+  "venue": "Neural Plasticity",
+  "volume": "Volume 2026",
+  "pages": "p. 1-17",
+  "authors": "Jin-Ju Kang, Yongseon Yoo, Sang-Yeon Kim, Sohui Kim, Jong-Min Lee*, Sun-Young Oh",
+  "link_url": "https://doi.org/10.1155/np/9968808",
+  "is_highlight": false,
+  "in_press": false
 }

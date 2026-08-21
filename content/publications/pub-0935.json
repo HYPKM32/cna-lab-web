@@ -1,12 +1,13 @@
 {
- "id": 935,
- "type": "journal",
- "year": null,
- "pages": null,
- "title": "A Fully Inductive Inference Protocol for Population GNNs in Single-Subject Brain Disorder Diagnosis",
- "venue": "Computers in Biology and Medicine",
- "volume": null,
- "authors": "JaeminLim, SohuiKim, SeungyeonSon, Jong-Min Lee*",
- "link_url": null,
- "is_highlight": 0
+  "id": 935,
+  "type": "journal",
+  "year": 2026,
+  "title": "A Fully Inductive Inference Protocol for Population GNNs in Single-Subject Brain Disorder Diagnosis",
+  "venue": "Computers in Biology and Medicine",
+  "volume": "Volume 213",
+  "pages": "",
+  "authors": "JaeminLim, SohuiKim, SeungyeonSon, Jong-Min Lee*",
+  "link_url": "https://doi.org/10.1016/j.compbiomed.2026.111819",
+  "is_highlight": false,
+  "in_press": false
 }

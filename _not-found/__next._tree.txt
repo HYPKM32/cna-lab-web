@@ -1,4 +1,4 @@
 :HL["/_next/static/chunks/0r2f793kngmlz.css","style"]
 :HL["/cna-logo.png","image"]
 :HL["/hyu-logo.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"2BdzUYMGkMQwxoTGbYMPy"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"_wmqUQIygQW3X6LHzrI1o"}

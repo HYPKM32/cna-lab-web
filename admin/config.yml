@@ -103,6 +103,32 @@ collections:
       - { label: 사진, name: photo_key, widget: image, required: false }
       - { label: "표시 순서 (작을수록 앞)", name: sort_order, widget: number, required: false }
 
+  # ── 연구 소개 figure ─────────────────────────────────
+  - name: research
+    label: 연구 소개 (Research)
+    label_singular: 연구 figure
+    folder: content/research
+    format: json
+    extension: json
+    create: true
+    delete: true
+    slug: "fig-{{slug}}"
+    summary: "[{{order}}] {{title}}"
+    sortable_fields: [section, order, title]
+    fields:
+      - { label: "ID (수정 금지)", name: id, widget: hidden, required: false }
+      - label: "연구 파트"
+        name: section
+        widget: select
+        default: Brain_Disorder_and_Samd
+        options:
+          - { label: "01 · Brain Disorder and SaMD", value: Brain_Disorder_and_Samd }
+          - { label: "02 · NeuroImages", value: NeuroImages }
+          - { label: "03 · The Integration of Neuroimaging and AI", value: The_Integration_of_Neuroimaging_and_AI }
+      - { label: "표시 순서 (파트 안에서, 작을수록 앞)", name: order, widget: number, value_type: int }
+      - { label: "제목 (그림 아래 캡션)", name: title, widget: string }
+      - { label: "슬라이드 이미지", name: image, widget: image }
+
   # ── 세미나 ───────────────────────────────────────────
   - name: lectures
     label: 세미나 (Seminars)

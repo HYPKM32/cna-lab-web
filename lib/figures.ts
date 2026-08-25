@@ -1,17 +1,20 @@
-// 연구소개 figure 폴더 읽기 (public/uploads/figure/<섹션>/<순번>_<제목>.png)
-// 정적 export 라 빌드 시점에 읽힌다 — 파일 추가/삭제 후 재배포하면 반영.
-import { readdir } from "node:fs/promises";
-import path from "node:path";
+// 연구소개 figure — 콘텐츠 원본은 content/research/*.json (건별 파일, /admin CMS 가 편집).
+// data/research.json 은 prebuild(scripts/aggregate-content.mjs)가 생성하는 집계본이다.
+import researchJson from "@/data/research.json";
 import { asset } from "./asset";
 import { RESEARCH_SECTIONS as SECTIONS } from "./research-meta";
 
-const FIGURE_DIR =
-  process.env.FIGURE_DIR ?? path.join(process.cwd(), "public/uploads/figure");
-const IMAGE_EXT = /\.(png|jpe?g|webp|gif|avif)$/i;
+interface ResearchRow {
+  id: number;
+  section: string; // RESEARCH_SECTIONS 의 folder 키
+  order: number | null; // 섹션 내 표시 순서 (작을수록 앞)
+  title: string;
+  image: string; // /uploads/... 경로 (CMS image 위젯)
+}
 
 export interface Figure {
-  src: string; // /uploads/figure/... (nginx 가 서빙)
-  label: string; // 파일명에서 순번·확장자 뗀 제목
+  src: string; // basePath 프리픽스 포함 이미지 경로
+  label: string; // 캡션 바 제목
 }
 
 export interface ResearchSection {
@@ -20,27 +23,16 @@ export interface ResearchSection {
 }
 
 export async function getResearchSections(): Promise<ResearchSection[]> {
-  return Promise.all(
-    SECTIONS.map(async ({ folder, title }) => {
-      let files: string[] = [];
-      try {
-        files = await readdir(path.join(FIGURE_DIR, folder));
-      } catch {
-        // 폴더가 없으면 빈 섹션으로
-      }
-      const figures = files
-        .filter((f) => IMAGE_EXT.test(f))
-        .map((f) => {
-          const m = f.match(/^(\d+)[_-]*(.*)\.[^.]+$/);
-          return {
-            order: m ? parseInt(m[1], 10) : Number.MAX_SAFE_INTEGER,
-            src: asset(`/uploads/figure/${folder}/${f}`),
-            label: (m?.[2] || f.replace(IMAGE_EXT, "")).replace(/_/g, " ").trim(),
-          };
-        })
-        .sort((a, b) => a.order - b.order)
-        .map(({ src, label }) => ({ src, label }));
-      return { title, figures };
-    }),
-  );
+  const rows = researchJson as ResearchRow[];
+  return SECTIONS.map(({ folder, title }) => ({
+    title,
+    figures: rows
+      .filter((r) => r.section === folder && r.image)
+      .sort(
+        (a, b) =>
+          (a.order ?? Number.MAX_SAFE_INTEGER) -
+            (b.order ?? Number.MAX_SAFE_INTEGER) || a.id - b.id,
+      )
+      .map((r) => ({ src: asset(r.image), label: r.title })),
+  }));
 }

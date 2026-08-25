@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const COLLECTIONS = ["publications", "people", "lectures", "patents"];
+const COLLECTIONS = ["publications", "people", "lectures", "patents", "research"];
 
 await mkdir(path.join(ROOT, "data"), { recursive: true });
 

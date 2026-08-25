@@ -134,6 +134,8 @@ export function getStats() {
   ).length;
   return {
     publications: publications.length,
+    sciJournals: publications.filter((p) => p.type === "journal").length,
+    intlConfs: publications.filter((p) => p.type === "conference").length,
     patents: patents.length,
     currentMembers: current,
     alumni: people.length - current,

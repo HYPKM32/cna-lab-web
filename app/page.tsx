@@ -60,33 +60,19 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-6 pb-14 pt-10 lg:pt-8">
           {/* 통계 — 헤어라인으로 나뉜 가로 밴드 (숫자 위·라벨 아래) */}
           <Reveal className="min-w-0">
-            <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/15 backdrop-blur-md md:grid-cols-5">
-              {(
-                [
-                  {
-                    label: "Publications",
-                    value: stats.publications,
-                    sub: `SCI(E) ${stats.sciJournals} · Intl. Conf. ${stats.intlConfs}`,
-                  },
-                  { label: "Patents", value: stats.patents },
-                  { label: "Current Members", value: stats.currentMembers },
-                  { label: "Alumni", value: stats.alumni },
-                  { label: "Seminars", value: stats.lectures },
-                ] as { label: string; value: number; sub?: string }[]
-              ).map((s, i) => (
+            <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/15 backdrop-blur-md md:grid-cols-3 lg:grid-cols-6">
+              {[
+                { label: "SCI(E) Journals", value: stats.sciJournals },
+                { label: "Intl. Conferences", value: stats.intlConfs },
+                { label: "Patents", value: stats.patents },
+                { label: "Current Members", value: stats.currentMembers },
+                { label: "Alumni", value: stats.alumni },
+                { label: "Seminars", value: stats.lectures },
+              ].map((s) => (
                 <div
                   key={s.label}
-                  className={
-                    "flex flex-col-reverse items-center justify-center gap-1 bg-slate-900/80 px-3 py-5 transition hover:bg-slate-900/60 " +
-                    (i === 4 ? "col-span-2 md:col-span-1" : "")
-                  }
+                  className="flex flex-col-reverse items-center justify-center gap-1 bg-slate-900/80 px-3 py-5 transition hover:bg-slate-900/60"
                 >
-                  {/* flex-col-reverse 라 DOM 순서: [서브, 라벨, 숫자] → 화면: 숫자·라벨·서브 */}
-                  {s.sub && (
-                    <dd className="text-[10px] font-medium tracking-wide text-slate-500">
-                      {s.sub}
-                    </dd>
-                  )}
                   <dt className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
                     {s.label}
                   </dt>

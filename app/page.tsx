@@ -6,7 +6,6 @@ import { PatentsBrowser } from "@/components/patents-browser";
 import { LecturesBrowser } from "@/components/lectures-browser";
 import PeopleSection from "./people/page";
 import { getResearchSections } from "@/lib/figures";
-import { asset } from "@/lib/asset";
 import { SITE } from "@/lib/labels";
 import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
@@ -22,16 +21,14 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-slate-950">
-        {/* 배너 이미지 배경 (살짝 밝고 선명하게) — 정적 export 라 plain img */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={asset("/hero-banner.png")}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center brightness-115 saturate-125"
-        />
-        {/* 가독성용 다크 오버레이 — 왼쪽 텍스트 영역만 강하게, 나머지는 옅게 해 이미지가 빛나도록 */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-transparent" />
+        {/* 배너 이미지 대신 단색 그라데이션 배경 — 광원 글로우 두 개로 심심하지 않게 */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950" />
+        {/* 오른쪽 위 하늘색 광원 */}
+        <div className="pointer-events-none absolute -right-40 -top-52 h-[36rem] w-[36rem] rounded-full bg-sky-500/25 blur-[130px]" />
+        {/* 중앙 아래 시안 광원 (옅게) */}
+        <div className="pointer-events-none absolute -bottom-56 left-1/3 h-[26rem] w-[26rem] rounded-full bg-cyan-400/15 blur-[120px]" />
+        {/* 아래 섹션(#overview, slate-950)으로 자연스럽게 이어지는 페이드 */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-slate-950" />
 
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-44">
           <Reveal>

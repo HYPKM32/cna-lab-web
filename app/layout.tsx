@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: `${SITE.name} · ${SITE.full}`,
     description: `${SITE.full}, ${SITE.org}. Led by ${SITE.pi}.`,
-    images: [{ url: "/hero-banner.png" }],
+    images: [{ url: "/cna-logo.png" }],
   },
   robots: { index: true, follow: true },
 };

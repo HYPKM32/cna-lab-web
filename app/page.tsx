@@ -21,12 +21,49 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-slate-950">
-        {/* 배너 이미지 대신 단색 그라데이션 배경 — 광원 글로우 두 개로 심심하지 않게 */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950" />
-        {/* 오른쪽 위 하늘색 광원 */}
-        <div className="pointer-events-none absolute -right-40 -top-52 h-[36rem] w-[36rem] rounded-full bg-sky-500/25 blur-[130px]" />
-        {/* 중앙 아래 시안 광원 (옅게) */}
-        <div className="pointer-events-none absolute -bottom-56 left-1/3 h-[26rem] w-[26rem] rounded-full bg-cyan-400/15 blur-[120px]" />
+        {/* 배너 이미지 대체 배경 — 그라데이션 + 청사진 그리드 + 오로라 광원 + 뉴럴 네트워크 */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950 via-[#0b1a33] to-slate-950" />
+        {/* 청사진 그리드 — 중앙만 보이고 가장자리로 페이드 */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.13] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_72%)]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(125,211,252,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(125,211,252,.5) 1px,transparent 1px)",
+            backgroundSize: "52px 52px",
+          }}
+        />
+        {/* 천천히 흐르는 오로라 광원 */}
+        <div className="hero-blob-a pointer-events-none absolute -top-40 right-[-8rem] h-[34rem] w-[34rem] rounded-full bg-sky-500/30 blur-[110px]" />
+        <div className="hero-blob-b pointer-events-none absolute bottom-[-10rem] left-[8%] h-[26rem] w-[26rem] rounded-full bg-cyan-400/20 blur-[110px]" />
+        <div className="pointer-events-none absolute left-1/2 top-1/3 h-72 w-72 rounded-full bg-indigo-500/15 blur-[100px]" />
+        {/* 뉴럴 네트워크 모티프 — 오른쪽, 노드가 은은하게 점멸 */}
+        <svg
+          className="pointer-events-none absolute right-[3%] top-1/2 hidden h-[26rem] w-[30rem] -translate-y-1/2 opacity-70 md:block"
+          viewBox="0 0 480 420"
+          fill="none"
+          aria-hidden
+        >
+          <g stroke="#38bdf8" strokeWidth="1">
+            <path d="M30 70 190 40M30 70 190 140M30 170 190 140M30 170 190 240M30 270 190 240M30 270 190 340M30 350 190 340" strokeOpacity="0.18" />
+            <path d="M190 40 340 90M190 140 340 90M190 140 340 210M190 240 340 210M190 240 340 330M190 340 340 330" strokeOpacity="0.22" />
+            <path d="M340 90 450 160M340 210 450 160M340 210 450 260M340 330 450 260" strokeOpacity="0.28" />
+          </g>
+          <g fill="#7dd3fc">
+            <circle cx="30" cy="70" r="4" opacity="0.55" />
+            <circle className="hero-node" cx="30" cy="170" r="5" />
+            <circle cx="30" cy="270" r="4" opacity="0.45" />
+            <circle cx="30" cy="350" r="3.5" opacity="0.5" />
+            <circle className="hero-node" cx="190" cy="40" r="4" style={{ animationDelay: "1.2s" }} />
+            <circle cx="190" cy="140" r="5" opacity="0.6" />
+            <circle cx="190" cy="240" r="4" opacity="0.5" />
+            <circle className="hero-node" cx="190" cy="340" r="4" style={{ animationDelay: "2.6s" }} />
+            <circle cx="340" cy="90" r="4.5" opacity="0.6" />
+            <circle className="hero-node" cx="340" cy="210" r="5.5" style={{ animationDelay: "0.6s" }} />
+            <circle cx="340" cy="330" r="4" opacity="0.5" />
+            <circle className="hero-node" cx="450" cy="160" r="6" style={{ animationDelay: "1.8s" }} />
+            <circle cx="450" cy="260" r="5" opacity="0.65" />
+          </g>
+        </svg>
         {/* 아래 섹션(#overview, slate-950)으로 자연스럽게 이어지는 페이드 */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-slate-950" />
 

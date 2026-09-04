@@ -46,3 +46,23 @@ body {
     animation: none;
   }
 }
+
+/* ── 히어로 배경 애니메이션 (배너 이미지 대체) ── */
+@keyframes hero-drift-a {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(3rem, 1.5rem) scale(1.12); }
+}
+@keyframes hero-drift-b {
+  from { transform: translate(0, 0) scale(1.08); }
+  to { transform: translate(-2.5rem, -1.5rem) scale(1); }
+}
+@keyframes hero-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.95; }
+}
+.hero-blob-a { animation: hero-drift-a 16s ease-in-out infinite alternate; }
+.hero-blob-b { animation: hero-drift-b 21s ease-in-out infinite alternate; }
+.hero-node { animation: hero-pulse 4.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob-a, .hero-blob-b, .hero-node { animation: none; }
+}

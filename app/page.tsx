@@ -10,6 +10,7 @@ import { SITE } from "@/lib/labels";
 import { Reveal } from "@/components/reveal";
 import { CountUp } from "@/components/count-up";
 import { UnderlineDraw } from "@/components/underline-draw";
+import { BrainGraph } from "@/components/brain-graph";
 
 export default async function HomePage() {
   const stats = getStats();
@@ -36,34 +37,8 @@ export default async function HomePage() {
         <div className="hero-blob-a pointer-events-none absolute -top-40 right-[-8rem] h-[34rem] w-[34rem] rounded-full bg-sky-500/30 blur-[110px]" />
         <div className="hero-blob-b pointer-events-none absolute bottom-[-10rem] left-[8%] h-[26rem] w-[26rem] rounded-full bg-cyan-400/20 blur-[110px]" />
         <div className="pointer-events-none absolute left-1/2 top-1/3 h-72 w-72 rounded-full bg-indigo-500/15 blur-[100px]" />
-        {/* 뉴럴 네트워크 모티프 — 오른쪽, 노드가 은은하게 점멸 */}
-        <svg
-          className="pointer-events-none absolute right-[3%] top-1/2 hidden h-[26rem] w-[30rem] -translate-y-1/2 opacity-70 md:block"
-          viewBox="0 0 480 420"
-          fill="none"
-          aria-hidden
-        >
-          <g stroke="#38bdf8" strokeWidth="1">
-            <path d="M30 70 190 40M30 70 190 140M30 170 190 140M30 170 190 240M30 270 190 240M30 270 190 340M30 350 190 340" strokeOpacity="0.18" />
-            <path d="M190 40 340 90M190 140 340 90M190 140 340 210M190 240 340 210M190 240 340 330M190 340 340 330" strokeOpacity="0.22" />
-            <path d="M340 90 450 160M340 210 450 160M340 210 450 260M340 330 450 260" strokeOpacity="0.28" />
-          </g>
-          <g fill="#7dd3fc">
-            <circle cx="30" cy="70" r="4" opacity="0.55" />
-            <circle className="hero-node" cx="30" cy="170" r="5" />
-            <circle cx="30" cy="270" r="4" opacity="0.45" />
-            <circle cx="30" cy="350" r="3.5" opacity="0.5" />
-            <circle className="hero-node" cx="190" cy="40" r="4" style={{ animationDelay: "1.2s" }} />
-            <circle cx="190" cy="140" r="5" opacity="0.6" />
-            <circle cx="190" cy="240" r="4" opacity="0.5" />
-            <circle className="hero-node" cx="190" cy="340" r="4" style={{ animationDelay: "2.6s" }} />
-            <circle cx="340" cy="90" r="4.5" opacity="0.6" />
-            <circle className="hero-node" cx="340" cy="210" r="5.5" style={{ animationDelay: "0.6s" }} />
-            <circle cx="340" cy="330" r="4" opacity="0.5" />
-            <circle className="hero-node" cx="450" cy="160" r="6" style={{ animationDelay: "1.8s" }} />
-            <circle cx="450" cy="260" r="5" opacity="0.65" />
-          </g>
-        </svg>
+        {/* 3D 뇌 모양 뉴럴 그래프 — 천천히 회전 (모바일 숨김) */}
+        <BrainGraph className="pointer-events-none absolute right-[2%] top-1/2 hidden h-[27rem] w-[30rem] -translate-y-1/2 opacity-80 md:block" />
         {/* 아래 섹션(#overview, slate-950)으로 자연스럽게 이어지는 페이드 */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-slate-950" />
 

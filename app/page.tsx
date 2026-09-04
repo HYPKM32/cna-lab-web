@@ -37,12 +37,12 @@ export default async function HomePage() {
         <div className="hero-blob-a pointer-events-none absolute -top-40 right-[-8rem] h-[34rem] w-[34rem] rounded-full bg-sky-500/30 blur-[110px]" />
         <div className="hero-blob-b pointer-events-none absolute bottom-[-10rem] left-[8%] h-[26rem] w-[26rem] rounded-full bg-cyan-400/20 blur-[110px]" />
         <div className="pointer-events-none absolute left-1/2 top-1/3 h-72 w-72 rounded-full bg-indigo-500/15 blur-[100px]" />
-        {/* 3D 뇌 모양 뉴럴 그래프 — 천천히 회전 (모바일 숨김) */}
-        <BrainGraph className="pointer-events-none absolute right-[2%] top-1/2 hidden h-[27rem] w-[30rem] -translate-y-1/2 opacity-80 md:block" />
         {/* 아래 섹션(#overview, slate-950)으로 자연스럽게 이어지는 페이드 */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-slate-950" />
 
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-44">
+          {/* 3D 뇌 삼각 메쉬 — 배너 글씨 바로 오른쪽에서 천천히 회전 (넓은 화면에서만) */}
+          <BrainGraph className="pointer-events-none absolute -right-4 top-1/2 hidden h-[21rem] w-[19rem] -translate-y-1/2 opacity-90 lg:block xl:h-[27rem] xl:w-[25rem]" />
           <Reveal>
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-sky-300">
               {SITE.name}

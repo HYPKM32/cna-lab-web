@@ -41,6 +41,53 @@ export function BrainGraph({ className }: { className?: string }) {
       const cx = W / 2;
       const cy = H / 2;
 
+      // ── 한 점 광원 (뇌 아래) — 빛 자체가 일렁이는 3겹 글로우, 뇌와 겹치지 않음 ──
+      {
+        // 서로 다른 주파수의 사인 합 → 촛불처럼 일렁이는(찰랑이는) 빛
+        const f1 =
+          0.78 +
+          0.13 * Math.sin(t * 0.003) +
+          0.06 * Math.sin(t * 0.0071 + 1.3) +
+          0.05 * Math.sin(t * 0.0113 + 2.1);
+        const f2 =
+          0.8 +
+          0.12 * Math.sin(t * 0.0026 + 0.7) +
+          0.08 * Math.sin(t * 0.0093 + 3.0);
+        const baseY = cy + scale * 1.25; // 광원 한 점 (뇌 아래)
+        const stopY = cy + scale * 0.5; // 빛이 뇌에 닿기 전 여기서 소멸
+        // 위로 뻗다 사라지는 짧은 빛기둥
+        const g = ctx.createLinearGradient(0, baseY, 0, stopY);
+        g.addColorStop(0, `rgba(125,211,252,${(0.32 * f1).toFixed(3)})`);
+        g.addColorStop(1, "rgba(56,189,248,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(cx - scale * 0.16, baseY);
+        ctx.lineTo(cx - scale * 0.42, stopY);
+        ctx.lineTo(cx + scale * 0.42, stopY);
+        ctx.lineTo(cx + scale * 0.16, baseY);
+        ctx.closePath();
+        ctx.fill();
+        // 광원 글로우 3겹 (넓게 퍼짐 → 중간 → 밝은 코어), 납작한 타원
+        ctx.save();
+        ctx.translate(cx, baseY);
+        ctx.scale(1, 0.34);
+        const layers: Array<[number, string]> = [
+          [scale * 0.55 * f2, `rgba(56,189,248,${(0.22 * f2).toFixed(3)})`],
+          [scale * 0.3 * f1, `rgba(125,211,252,${(0.4 * f1).toFixed(3)})`],
+          [scale * 0.12 * f2, `rgba(224,242,254,${(0.85 * f1).toFixed(3)})`],
+        ];
+        for (const [r, c] of layers) {
+          const g2 = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+          g2.addColorStop(0, c);
+          g2.addColorStop(1, "rgba(56,189,248,0)");
+          ctx.fillStyle = g2;
+          ctx.beginPath();
+          ctx.arc(0, 0, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
       for (let i = 0; i < nv; i++) {
         const x = BRAIN_VERTS[i * 3];
         const y = BRAIN_VERTS[i * 3 + 1];
@@ -80,14 +127,17 @@ export function BrainGraph({ className }: { className?: string }) {
         const k = BRAIN_FACES[fi * 3 + 2];
         const d = depth[fi]; // -1(앞) ~ 1(뒤)
         const k1 = Math.max(0, 0.7 - d * 0.45);
+        // 아래 조명 수광량 — 화면 중심보다 아래(fy>cy)일수록 빛을 받음
+        const fy = (py[i] + py[j] + py[k]) / 3;
+        const lit = Math.max(0, Math.min(1, (fy - cy) / (scale * 0.85)));
         ctx.beginPath();
         ctx.moveTo(px[i], py[i]);
         ctx.lineTo(px[j], py[j]);
         ctx.lineTo(px[k], py[k]);
         ctx.closePath();
-        ctx.fillStyle = `rgba(12,35,64,${(0.25 + k1 * 0.2).toFixed(3)})`;
+        ctx.fillStyle = `rgba(${(12 + lit * 44) | 0},${(35 + lit * 105) | 0},${(64 + lit * 130) | 0},${(0.25 + k1 * 0.2).toFixed(3)})`;
         ctx.fill();
-        ctx.strokeStyle = `rgba(125,211,252,${(0.07 + k1 * 0.26).toFixed(3)})`;
+        ctx.strokeStyle = `rgba(125,211,252,${(0.07 + k1 * 0.26 + lit * 0.24).toFixed(3)})`;
         ctx.stroke();
       }
     };

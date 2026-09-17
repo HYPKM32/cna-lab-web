@@ -26,6 +26,7 @@ export interface Publication {
   link_url: string | null;
   is_highlight: boolean;
   in_press?: boolean; // 게재 확정·인쇄 중 (CMS 체크)
+  serial: number; // 일련번호 — 오래된 순 1부터, 빌드 때 자동 계산 (파일에 저장 안 함)
 }
 
 export type PersonCategory =
@@ -76,10 +77,25 @@ export interface Asset {
 
 // --- 정렬 규칙은 기존 Directus 쿼리(sort=)와 동일하게 유지 ---
 const publications: Publication[] = (
-  publicationsJson as Array<Omit<Publication, "is_highlight"> & { is_highlight: number | boolean }>
+  publicationsJson as Array<
+    Omit<Publication, "is_highlight" | "serial"> & { is_highlight: number | boolean }
+  >
 )
-  .map((p) => ({ ...p, is_highlight: Boolean(p.is_highlight) }))
+  .map((p) => ({ ...p, is_highlight: Boolean(p.is_highlight), serial: 0 }))
   .sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || b.id - a.id);
+
+// 일련번호 자동 부여 — 논문 추가/삭제 시 다음 빌드에서 전체 재계산된다.
+// 오래된 순: 연도 오름차순 → 같은 연도는 등록순(id 오름차순).
+// 연도 미정(In-progress)은 가장 최신으로 간주해 마지막 번호.
+[...publications]
+  .sort(
+    (a, b) =>
+      (a.year ?? Number.MAX_SAFE_INTEGER) - (b.year ?? Number.MAX_SAFE_INTEGER) ||
+      a.id - b.id,
+  )
+  .forEach((p, i) => {
+    p.serial = i + 1;
+  });
 
 const people: Person[] = (
   peopleJson as Array<Person & { sort_order?: number }>

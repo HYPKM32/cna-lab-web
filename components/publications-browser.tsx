@@ -150,15 +150,16 @@ export function PublicationsBrowser() {
               {list.map((p) => (
                 <li
                   key={p.id}
-                  className="group rounded-2xl border border-slate-200 bg-white p-7 transition hover:border-sky-300 hover:shadow-sm"
+                  className="group relative rounded-2xl border border-slate-200 bg-white p-7 transition hover:border-sky-300 hover:shadow-sm"
                 >
-                  {/* 모바일: 세로 쌓기 / 데스크톱: 좌우 배치 */}
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                  {/* 일련번호 — 카드 우측 상단 고정 */}
+                  <span className="absolute right-7 top-7 rounded-md border border-slate-200 px-2.5 py-1 font-mono text-sm font-medium text-slate-400">
+                    No. {p.serial}
+                  </span>
+                  {/* 모바일: 세로 쌓기 / 데스크톱: 좌우 배치 (우상단 번호 칩과 겹치지 않게 버튼은 세로 중앙) */}
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                     <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="rounded-md border border-slate-200 px-2.5 py-1 font-mono text-sm font-medium text-slate-400">
-                          No. {p.serial}
-                        </span>
+                      <div className="flex flex-wrap items-center gap-2 pr-20">
                         <span className="rounded-md bg-slate-100 px-2.5 py-1 text-sm font-medium text-slate-500">
                           {PUB_TYPE_LABEL[p.type]}
                         </span>
